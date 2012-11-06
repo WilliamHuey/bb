@@ -6,8 +6,7 @@ UserEntries = new Meteor.Collection("userEntries");
 
 Meteor.subscribe('phrases', function () {
 
-var rand = Math.rand();
-Phrases.findAndModify({query: {random: {$gte: rand}}, remove: true});
+
 
     //var phrase = Phrases.find();
 console.log(Phrases.find().length); 

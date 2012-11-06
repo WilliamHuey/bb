@@ -9,7 +9,7 @@ Meteor.subscribe('phrases', function () {
 
 
     //var phrase = Phrases.find();
-console.log(Phrases.find().length); 
+//console.log(Phrases.find().length); 
 });
 
 
