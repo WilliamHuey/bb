@@ -14,11 +14,9 @@ body, html{
 }
 
 #leftOuter{
-	width: 35%;
 	background-color: yellow;
 }
 
 #rightOuter{
-	width: 65%;
 	background-color: brown;
 }

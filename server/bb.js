@@ -1,9 +1,9 @@
 
 Phrases = new Meteor.Collection("phrases");
 Meteor.publish('phrases', function () {
-
+	
 	//console.log(Phrases.find({},{phrase: "Bunch of Words", category: "Second Category"}));
-  	return Phrases.find();
+  	return Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
 });
 
 

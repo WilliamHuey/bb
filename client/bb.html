@@ -3,9 +3,20 @@
 </head>
 
 <body>
-	{{> userInput}}
-	{{> phrases}}
+	{{>master}}
 </body>
+
+<template name="master">
+	<div id="wrapper">
+		<div id="leftOuter">
+			{{> userInput}}
+			{{> phrases}}
+		</div>
+		<div id="rightOuter">
+
+		</div>
+	</div>
+</template>
 
 <template name="userInput">
 	<p>Hey</p>
@@ -29,5 +40,5 @@
 </template>
 
 <template name="phrase">
-	<p>{{phrase}}</p>
+	<p>{{phrase}}{{category}}</p>
 </template>
