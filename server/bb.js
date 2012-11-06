@@ -1,6 +1,18 @@
 
 Phrases = new Meteor.Collection("phrases");
 Meteor.publish('phrases', function () {
+
+/*
+ rand = Math.random()
+
+ result = db.docs.findOne( { key : 2, random : { $gte : rand } } )
+ if ( result == null ) {
+   result = db.docs.findOne( { key : 2, random : { $lte : rand } } )
+}
+*/
+
+
+//console.log(Phrases.find());
   return Phrases.find();
 });
 

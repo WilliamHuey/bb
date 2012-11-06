@@ -2,17 +2,19 @@
 Phrases = new Meteor.Collection("phrases");
 UserEntries = new Meteor.Collection("userEntries");
 
+
+
 Meteor.subscribe('phrases', function () {
-  //if (!Session.get('list_id')) {
-    var phrase = Phrases.findOne({}, {sort: {name: 1}});
-    //if (list)
-     // Router.setList(list._id);
- // }
-console.log(phrase); 
+
+var rand = Math.rand();
+Phrases.findAndModify({query: {random: {$gte: rand}}, remove: true});
+
+    //var phrase = Phrases.find();
+console.log(Phrases.find().length); 
 });
 
-/*
-Meteor.autosubscribe('userEntries', function () {
+
+Meteor.subscribe('userEntries', function () {
   //if (!Session.get('list_id')) {
     var userEntry = UserEntries.find();
     //if (list)
@@ -20,4 +22,4 @@ Meteor.autosubscribe('userEntries', function () {
  // }
 console.log(userEntry); 
 });
-*/
+
