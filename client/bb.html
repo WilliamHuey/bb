@@ -1,19 +1,17 @@
 <head>
-  <title>bb</title>
+  	<title>bb</title>
 </head>
 
 <body>
- {{> userInput}}
-
-{{> userEntries}}
-
-{{> userEntry}}
+	{{> userInput}}
+	{{> phrases}}
 </body>
 
 <template name="userInput">
+	<p>Hey</p>
 	<input type="text" id='inputofuser' name="inputofuser"></input>
 </template>
-
+<!--
 <template name="userEntries">
 {{#each userEntries}}
 	{{> userEntry}}
@@ -22,6 +20,12 @@
 
 <template name="userEntry">
 	<p>{{userEntry}}</p>
+</template>
+-->
+<template name="phrases">
+{{#each Phrases}}
+	{{> phrase}}
+{{/each}}
 </template>
 
 <template name="phrase">

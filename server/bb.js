@@ -2,18 +2,8 @@
 Phrases = new Meteor.Collection("phrases");
 Meteor.publish('phrases', function () {
 
-/*
- rand = Math.random()
-
- result = db.docs.findOne( { key : 2, random : { $gte : rand } } )
- if ( result == null ) {
-   result = db.docs.findOne( { key : 2, random : { $lte : rand } } )
-}
-*/
-
-
-//console.log(Phrases.find());
-  return Phrases.find();
+	//console.log(Phrases.find({},{phrase: "Bunch of Words", category: "Second Category"}));
+  	return Phrases.find();
 });
 
 
@@ -25,14 +15,14 @@ Meteor.publish('userEntries', function () {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     if (Phrases.find().count() === 0) {
-      var phrases = ["Some Phrase",
-                   "Another Phrase",
-                   "Group of Words",
-                   "Words in a Group",
-                   "Some more words",
-                   "Bunch of Words"];
+      var phrases = [["Some Phrase","First Category"],
+                   ["Another Phrase", "Second Category"],
+                   ["Group of Words", "First Category"],
+                   ["Words in a Group", "Second Category"],
+                   ["Some more words", "First Category"],
+                   ["Bunch of Words", "Second Category"]];
       for (var i = 0; i < phrases.length; i++)
-        Phrases.insert({phrase: phrases[i]});
+        Phrases.insert({phrase: phrases[i][0], category: phrases[i][1]});
     }
   });
 }
