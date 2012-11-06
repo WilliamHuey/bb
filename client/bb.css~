@@ -26,10 +26,13 @@ body, html{
 }
 #errorMessage{
 	float: right;
+	
 }
 #phrase{
 	float: left;
+	width: 50%;
 }
 #category{
 	float: right;
+	width: 50%;
 }

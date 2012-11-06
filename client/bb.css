@@ -28,11 +28,11 @@ body, html{
 	float: right;
 	
 }
-#phrase{
+.phrase{
 	float: left;
 	width: 50%;
 }
-#category{
+.category{
 	float: right;
 	width: 50%;
 }

@@ -2,8 +2,7 @@
   	<title>bb</title>
 </head>
 
-<body>
-	
+<body>	
 	{{>master}}
 </body>
 

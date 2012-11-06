@@ -2,10 +2,17 @@
 Phrases = new Meteor.Collection("phrases");
 UserEntries = new Meteor.Collection("userEntries");
 
+/*
 Meteor.subscribe('userEntries', function () {
     var userEntry = UserEntries.find();  
 	//console.log(userEntry); 
 });
+
+Meteor.subscribe('userEntries', function () {
+    var userEntry = UserEntries.find();  
+	//console.log(userEntry); 
+});
+*/
 
 
  ////////// Helpers for in-place editing //////////
@@ -54,6 +61,8 @@ Template.userInput.events[okcancel_events('#inputofuser')] = make_okcancel_handl
 			if(alphanumeric(inputStuff.value) === true){
 				UserEntries.insert({userEntry: inputStuff.value});
 				$('#errorMessage').html("");
+				console.log($('.phrase').first().html());
+				
 			}
 			else {
 				$('#errorMessage').html("Sorry, can only enter letters")
@@ -71,6 +80,7 @@ Template.userEntries.userEntries = function(){
 }
 
 Template.phrases.Phrases = function(){
+		console.log('last');
 		return Phrases.find();	
 	};
 

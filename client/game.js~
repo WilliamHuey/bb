@@ -7,6 +7,12 @@ Meteor.subscribe('userEntries', function () {
 	//console.log(userEntry); 
 });
 
+Meteor.subscribe('userEntries', function () {
+    var userEntry = UserEntries.find();  
+	//console.log(userEntry); 
+});
+
+
 
  ////////// Helpers for in-place editing //////////
   
@@ -54,13 +60,11 @@ Template.userInput.events[okcancel_events('#inputofuser')] = make_okcancel_handl
 			if(alphanumeric(inputStuff.value) === true){
 				UserEntries.insert({userEntry: inputStuff.value});
 				$('#errorMessage').html("");
+				console.log($('.phrase').first().html());
+				
 			}
 			else {
-				//return false;
-				///event.target.value = "";
-				//var errorNotifier = document.getElementById("errorMessage");
 				$('#errorMessage').html("Sorry, can only enter letters")
-				//errorNotifier.innerHTML("Sorry, can only enter letters");
 			}
 
 		event.target.value = "";
@@ -75,6 +79,7 @@ Template.userEntries.userEntries = function(){
 }
 
 Template.phrases.Phrases = function(){
+		console.log('last');
 		return Phrases.find();	
 	};
 
