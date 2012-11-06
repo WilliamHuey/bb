@@ -1,0 +1,11 @@
+<head>
+  <title>bb</title>
+</head>
+
+<body>
+  {{> hello}}
+</body>
+
+<template name="hello">
+
+</template>

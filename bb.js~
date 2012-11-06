@@ -1,0 +1,28 @@
+if (Meteor.isClient) {
+  Template.hello.greeting = function () {
+    return "Welcome to bb.";
+  };
+
+  Template.hello.events({
+    'click input' : function () {
+      // template data, if any, is available in 'this'
+      if (typeof console !== 'undefined')
+        console.log("You pressed the button");
+    }
+  });
+}
+
+if (Meteor.isServer) {
+  Meteor.startup(function () {
+    if (Phrases.find().count() === 0) {
+      var phrases = ["Some Phrase",
+                   "Another Phrase",
+                   "Group of Words",
+                   "Words in a Group",
+                   "Some more words",
+                   "Bunch of Words"];
+      for (var i = 0; i < phrases.length; i++)
+        Phrases.insert({phrase: phrases[i]});
+    }
+  });
+}

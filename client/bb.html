@@ -1,0 +1,29 @@
+<head>
+  <title>bb</title>
+</head>
+
+<body>
+ {{> userInput}}
+
+{{> messages}}
+
+{{> phrase}}
+</body>
+
+<template name="userInput">
+	<input type="text" id='inputofuser' name="inputofuser"></input>
+</template>
+
+<template name="messages">
+{{#each messages}}
+	{{> message}}
+{{/each}}
+</template>
+
+<template name="message">
+	<p>{{message}}</p>
+</template>
+
+<template name="phrase">
+	<p>{{phrase}}</p>
+</template>
