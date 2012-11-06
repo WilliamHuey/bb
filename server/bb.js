@@ -7,9 +7,9 @@ Meteor.publish('phrases', function () {
 });
 
 
-userEntries = new Meteor.Collection("userEntries");
+UserEntries = new Meteor.Collection("userEntries");
 Meteor.publish('userEntries', function () {
-  return userEntries.find();
+  return UserEntries.find();
 });
 
 if (Meteor.isServer) {

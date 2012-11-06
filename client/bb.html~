@@ -3,24 +3,29 @@
 </head>
 
 <body>
+	
 	{{>master}}
 </body>
 
 <template name="master">
+
 	<div id="wrapper">
 		<div id="leftOuter">
 			{{> userInput}}
 			{{> phrases}}
 		</div>
-
+		<div id="rightOuter">
+			{{> userEntries}}
+		</div>
 	</div>
 </template>
 
 <template name="userInput">
-	<p>Hey</p>
+	<p>Hey, enter some text here.</p>
 	<input type="text" id='inputofuser' name="inputofuser"></input>
+	<p id="errorMessage"><p>
 </template>
-<!--
+
 <template name="userEntries">
 {{#each userEntries}}
 	{{> userEntry}}
@@ -30,7 +35,7 @@
 <template name="userEntry">
 	<p>{{userEntry}}</p>
 </template>
--->
+
 <template name="phrases">
 {{#each Phrases}}
 	{{> phrase}}
@@ -38,5 +43,6 @@
 </template>
 
 <template name="phrase">
-	<p>{{phrase}}{{category}}</p>
+	<p id="phrase">{{phrase}}</p>
+	<p id="category">{{category}}</p>
 </template>

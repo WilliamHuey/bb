@@ -16,9 +16,23 @@ body, html{
 #leftOuter{
 	width: 35%;
 	background-color: yellow;
+	float: left;
 }
 
 #rightOuter{
 	width: 65%;
-	background-color: brown;
+	background-color: orange;
+	float: left;
+}
+#errorMessage{
+	float: right;
+	
+}
+#phrase{
+	float: left;
+	width: 50%;
+}
+#category{
+	float: right;
+	width: 50%;
 }

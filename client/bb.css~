@@ -14,9 +14,22 @@ body, html{
 }
 
 #leftOuter{
+	width: 35%;
 	background-color: yellow;
+	float: left;
 }
 
 #rightOuter{
-	background-color: brown;
+	width: 65%;
+	background-color: orange;
+	float: left;
+}
+#errorMessage{
+	float: right;
+}
+#phrase{
+	float: left;
+}
+#category{
+	float: right;
 }
