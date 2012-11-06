@@ -1,8 +1,8 @@
 
 Phrases = new Meteor.Collection("phrases");
-userInputs = new Meteor.Collection("userInput");
+UserEntries = new Meteor.Collection("userEntries");
 
-Meteor.autosubscribe('phrases', function () {
+Meteor.subscribe('phrases', function () {
   //if (!Session.get('list_id')) {
     var phrase = Phrases.findOne({}, {sort: {name: 1}});
     //if (list)
@@ -11,4 +11,13 @@ Meteor.autosubscribe('phrases', function () {
 console.log(phrase); 
 });
 
+
+Meteor.subscribe('userEntries', function () {
+  //if (!Session.get('list_id')) {
+    var userEntry = UserEntries.find();
+    //if (list)
+     // Router.setList(list._id);
+ // }
+console.log(userEntry); 
+});
 

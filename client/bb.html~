@@ -3,9 +3,27 @@
 </head>
 
 <body>
-  {{> hello}}
+ {{> userInput}}
+
+{{> userEntries}}
+
+{{> phrase}}
 </body>
 
-<template name="hello">
+<template name="userInput">
+	<input type="text" id='inputofuser' name="inputofuser"></input>
+</template>
 
+<template name="userEntries">
+{{#each userEntries}}
+	{{> userEntry}}
+{{/each}}
+</template>
+
+<template name="userEntry">
+	<p>{{userEntry}}</p>
+</template>
+
+<template name="phrase">
+	<p>{{phrase}}</p>
 </template>

@@ -5,23 +5,23 @@
 <body>
  {{> userInput}}
 
-{{> messages}}
+{{> userEntries}}
 
-{{> phrase}}
+{{> userEntry}}
 </body>
 
 <template name="userInput">
 	<input type="text" id='inputofuser' name="inputofuser"></input>
 </template>
 
-<template name="messages">
-{{#each messages}}
-	{{> message}}
+<template name="userEntries">
+{{#each userEntries}}
+	{{> userEntry}}
 {{/each}}
 </template>
 
-<template name="message">
-	<p>{{message}}</p>
+<template name="userEntry">
+	<p>{{userEntry}}</p>
 </template>
 
 <template name="phrase">

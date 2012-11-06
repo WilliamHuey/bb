@@ -1,13 +1,13 @@
 
 Phrases = new Meteor.Collection("phrases");
-Meteor.autopublish('phrases', function () {
+Meteor.publish('phrases', function () {
   return Phrases.find();
 });
 
 
-userInputs = new Meteor.Collection("userInput");
-Meteor.autopublish('todos', function () {
-  return userInputs.find();
+userEntries = new Meteor.Collection("userEntries");
+Meteor.publish('userEntry', function () {
+  return userEntries.find();
 });
 
 if (Meteor.isServer) {

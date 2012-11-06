@@ -5,9 +5,9 @@ Meteor.publish('phrases', function () {
 });
 
 
-userInputs = new Meteor.Collection("userInput");
-Meteor.publish('todos', function () {
-  return userInputs.find();
+userEntries = new Meteor.Collection("userEntries");
+Meteor.publish('userEntries', function () {
+  return userEntries.find();
 });
 
 if (Meteor.isServer) {
