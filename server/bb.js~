@@ -22,6 +22,7 @@ if (Meteor.isServer) {
 
 	UserEntries.remove({});
 	Phrases.remove({});
+	UserColors.remove({});
 
 	console.log('server restarted');
       var phrases = [["Some Phrase","First Category"],

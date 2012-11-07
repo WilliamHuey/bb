@@ -55,6 +55,7 @@
 {{/each}}
 </template>
 
-<template name="userColor">
+<template name="color">
 	<p>{{color}}</p>
+	<p>{{_id}}</p>
 </template>

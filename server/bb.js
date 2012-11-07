@@ -24,6 +24,8 @@ if (Meteor.isServer) {
 	Phrases.remove({});
 	UserColors.remove({});
 
+	UserColors.insert({session: Math.random()});
+
 	console.log('server restarted');
       var phrases = [["Some Phrase","First Category"],
                    ["Another Phrase", "Second Category"],

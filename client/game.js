@@ -8,6 +8,11 @@ UserColors = new Meteor.Collection("userColors");
 if (Meteor.isClient) {
 console.log('here');
 var userColor = ("#" + Math.random().toString(16).slice(2, 8));
+
+//console.log(UserColors.find({session: { $regex : '.'}}));
+
+//var identifier = UserColors.find({session: { $regex : '.'}});
+
 UserColors.insert({color: userColor});    
 //console.log("#" + Math.random().toString(16).slice(2, 8)); 
 
@@ -64,7 +69,7 @@ Template.userInput.events[okcancel_events('#inputofuser')] = make_okcancel_handl
 
 		var inputStuff = document.getElementById('inputofuser');
 
-				function alphanumeric(inputtxt) {  
+				function onlyAlphabets(inputtxt) {  
 				 	var letterNumber = /^[a-zA-Z]+$/;  
 				 	if(inputtxt.match(letterNumber)){  
 				   		return true;						
@@ -73,7 +78,7 @@ Template.userInput.events[okcancel_events('#inputofuser')] = make_okcancel_handl
 				    }  
 				} 
 
-			if(alphanumeric(inputStuff.value) === true){
+			if(onlyAlphabets(inputStuff.value) === true){
 				UserEntries.insert({userEntry: inputStuff.value});
 				$('#errorMessage').html("");
 				console.log($('.phrase').first().html());
