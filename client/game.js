@@ -1,6 +1,15 @@
 
 Phrases = new Meteor.Collection("phrases");
 UserEntries = new Meteor.Collection("userEntries");
+UserColors = new Meteor.Collection("userColors");
+
+
+
+if (Meteor.isClient) {
+console.log('here');
+var userColor = ("#" + Math.random().toString(16).slice(2, 8));
+UserColors.insert({color: userColor});    
+//console.log("#" + Math.random().toString(16).slice(2, 8)); 
 
 /*
 Meteor.subscribe('userEntries', function () {
@@ -47,6 +56,12 @@ Meteor.subscribe('userEntries', function () {
 Template.userInput.events = {};
 Template.userInput.events[okcancel_events('#inputofuser')] = make_okcancel_handler({
 	ok: function(text,event){
+
+		//onsole.log(Session.get());
+		//var another = Phrases.findOne(Session.get("something"));
+		//console.log(another);
+
+
 		var inputStuff = document.getElementById('inputofuser');
 
 				function alphanumeric(inputtxt) {  
@@ -75,13 +90,24 @@ Template.userInput.events[okcancel_events('#inputofuser')] = make_okcancel_handl
 });
 
 Template.userEntries.userEntries = function(){
-	UserEntries.remove({});
+	//console.log('kinda last');
+	//UserEntries.remove({});
 	return UserEntries.find();
 }
 
-Template.phrases.Phrases = function(){
-		console.log('last');
+
+	Template.phrases.Phrases = function(){
+		//console.log('last');
+
+
 		return Phrases.find();	
 	};
+	
+	Template.userColors.UserColors = function(){
+		//console.log('last');
 
 
+		return UserColors.find();	
+	};
+	
+}

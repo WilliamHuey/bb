@@ -21,7 +21,7 @@ body, html{
 
 #rightOuter{
 	width: 65%;
-	background-color: orange;
+	background-color: #DCDCDC;
 	float: left;
 }
 #errorMessage{

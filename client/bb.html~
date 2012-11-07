@@ -16,6 +16,9 @@
 		<div id="rightOuter">
 			{{> userEntries}}
 		</div>
+		<div id="colorsOfUsers">
+			{{> userColors}}			
+		</div>
 	</div>
 </template>
 
@@ -42,6 +45,16 @@
 </template>
 
 <template name="phrase">
-	<p id="phrase">{{phrase}}</p>
-	<p id="category">{{category}}</p>
+	<p class="phrase">{{phrase}}</p>
+	<p class="category">{{category}}</p>
+</template>
+
+<template name="userColors">
+{{#each UserColors}}
+	{{> color}}
+{{/each}}
+</template>
+
+<template name="userColor">
+	<p>{{color}}</p>
 </template>
