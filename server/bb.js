@@ -2,19 +2,23 @@ Phrases = new Meteor.Collection("phrases");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
-/*
+
  //auto publish is on by default
  //Phrases = Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
  Meteor.publish('phrases', function () {
- return Phrases.find();
+    return Phrases.find();
  //console.log(Phrases.find({},{phrase: "Bunch of Words", category: "Second Category"}));
  //return Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
  });
 
  Meteor.publish('userEntries', function () {
- return UserEntries.find();
+    return UserEntries.find();
  });
- */
+
+Meteor.publish('userColors', function () {
+    return UserColors.find();
+});
+
 
 var displayName = function (user) {
     if (user.profile && user.profile.name)

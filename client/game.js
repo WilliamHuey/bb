@@ -2,48 +2,25 @@ Phrases = new Meteor.Collection("phrases");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
-console.log('before');
-console.log(UserColors.find().count());
+
 
 if (Meteor.isClient) {
 
-    //console.log(UserColors.find({color: { $regex : '.'}}).count());
+    Meteor.subscribe('userEntries', function () {
+    });
+
+    Meteor.subscribe('phrases', function () {
+    });
 
     if (this.userId) {
-        var userColor = ("#" + Math.random().toString(16).slice(2, 8));
-
-        //console.log(UserColors.find({session: { $regex : '.'}}));
-        //var identifier = UserColors.find({session: { $regex : '.'}});
-        //console.log(UserColors.find().collection.find());
-
-        //console.log(UserColors.find().count());
-        //console.log(UserColors.find({color: { $regex : '.'}}));
-        //console.log(UserColors.find({color: { $regex : '.'}}).count());
-        UserColors.insert({color:userColor});
-
-        Meteor.startup(function () {
-            console.log('after');
-            console.log(UserColors.find().count());
+        Meteor.subscribe('userColors', function () {
+            if (UserColors.find({userid:this.userId}).count() === 0) {
+                var userColor = ("#" + Math.random().toString(16).slice(2, 8));
+                UserColors.insert({userid:this.userId, color:userColor});
+            }
         });
 
-        //console.log(UserColors.find({color: { $regex : '.'}}).count());
-        // console.log(UserColors.find().collection);
-
-        //console.log(UserColors.find().collection.docs);
     }
-    //console.log("#" + Math.random().toString(16).slice(2, 8));
-
-    /*
-     Meteor.subscribe('userEntries', function () {
-     var userEntry = UserEntries.find();
-     //console.log(userEntry);
-     });
-
-     Meteor.subscribe('userEntries', function () {
-     var userEntry = UserEntries.find();
-     //console.log(userEntry);
-     });
-     */
 
     ////////// Helpers for in-place editing //////////
 
