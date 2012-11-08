@@ -2,27 +2,35 @@ Phrases = new Meteor.Collection("phrases");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
+console.log('before');
+console.log(UserColors.find().count());
+
 if (Meteor.isClient) {
-    console.log('here');
-    console.log(UserColors.find({color: { $regex : '.'}}).count());
 
-    if(this.userId){
-    var userColor = ("#" + Math.random().toString(16).slice(2, 8));
+    //console.log(UserColors.find({color: { $regex : '.'}}).count());
 
-    //console.log(UserColors.find({session: { $regex : '.'}}));
-    //var identifier = UserColors.find({session: { $regex : '.'}});
+    if (this.userId) {
+        var userColor = ("#" + Math.random().toString(16).slice(2, 8));
+
+        //console.log(UserColors.find({session: { $regex : '.'}}));
+        //var identifier = UserColors.find({session: { $regex : '.'}});
         //console.log(UserColors.find().collection.find());
 
         //console.log(UserColors.find().count());
         //console.log(UserColors.find({color: { $regex : '.'}}));
         //console.log(UserColors.find({color: { $regex : '.'}}).count());
-    UserColors.insert({color:userColor});
+        UserColors.insert({color:userColor});
 
-        console.log(UserColors.find({color: { $regex : '.'}}).count());
-       // console.log(UserColors.find().collection);
+        Meteor.startup(function () {
+            console.log('after');
+            console.log(UserColors.find().count());
+        });
+
+        //console.log(UserColors.find({color: { $regex : '.'}}).count());
+        // console.log(UserColors.find().collection);
 
         //console.log(UserColors.find().collection.docs);
-}
+    }
     //console.log("#" + Math.random().toString(16).slice(2, 8));
 
     /*
@@ -119,10 +127,10 @@ if (Meteor.isClient) {
         //console.log(Meteor.users.find());
         console.log(owner);
         /*
-        if (owner._id === Meteor.userId())
-            return "me";
-        return displayName(owner);
-        */
+         if (owner._id === Meteor.userId())
+         return "me";
+         return displayName(owner);
+         */
     };
 
 }

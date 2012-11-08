@@ -46,5 +46,7 @@ if (Meteor.isServer) {
         var indexPhrase = getRandomizer(0, (phrases.length - 1));
         Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
 
+
+
     });
 }
