@@ -20,6 +20,9 @@ body, html{
 	background-color: #DCDCDC;
 	float: left;
 }
+#login-box{
+    float: right;
+}
 #errorMessage{
 	float: right;
 }

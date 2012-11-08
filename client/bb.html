@@ -9,6 +9,7 @@
 <template name="master">
     <div id="wrapper">
         <div id="leftOuter">
+            {{> details}}
             {{> userInput}}
             {{> phrases}}
         </div>
@@ -21,7 +22,17 @@
     </div>
 </template>
 
+<template name="details">
+    {{creatorName}}
+</template>
+
 <template name="userInput">
+    <div id="login-box">{{loginButtons}}</div>
+
+    {{#if currentUser}}
+        <p>Currently Logged in</p>
+    {{/if}}
+
     <p>Hey, enter some text here.</p>
     <input type="text" id="inputofuser" name="inputofuser">
     <p id="errorMessage"><p>

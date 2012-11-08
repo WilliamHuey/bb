@@ -4,12 +4,25 @@ UserColors = new Meteor.Collection("userColors");
 
 if (Meteor.isClient) {
     console.log('here');
+    console.log(UserColors.find({color: { $regex : '.'}}).count());
+
+    if(this.userId){
     var userColor = ("#" + Math.random().toString(16).slice(2, 8));
 
     //console.log(UserColors.find({session: { $regex : '.'}}));
     //var identifier = UserColors.find({session: { $regex : '.'}});
+        //console.log(UserColors.find().collection.find());
 
+        //console.log(UserColors.find().count());
+        //console.log(UserColors.find({color: { $regex : '.'}}));
+        //console.log(UserColors.find({color: { $regex : '.'}}).count());
     UserColors.insert({color:userColor});
+
+        console.log(UserColors.find({color: { $regex : '.'}}).count());
+       // console.log(UserColors.find().collection);
+
+        //console.log(UserColors.find().collection.docs);
+}
     //console.log("#" + Math.random().toString(16).slice(2, 8));
 
     /*
@@ -98,6 +111,18 @@ if (Meteor.isClient) {
 
     Template.userColors.UserColors = function () {
         return UserColors.find();
+    };
+
+    Template.details.creatorName = function () {
+        var owner = this.userId
+        //var owner = Meteor.users.findOne(this.owner);
+        //console.log(Meteor.users.find());
+        console.log(owner);
+        /*
+        if (owner._id === Meteor.userId())
+            return "me";
+        return displayName(owner);
+        */
     };
 
 }
