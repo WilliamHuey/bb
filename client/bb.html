@@ -45,8 +45,11 @@
 </template>
 
 <template name="userEntry">
-    <p>{{userEntry}}</p>
+
+    <p class="{{idMarker}}">{{userEntry}}</p>
 </template>
+
+
 
 <template name="phrases">
     {{#each Phrases}}
@@ -66,5 +69,5 @@
 </template>
 
 <template name="color">
-    <p>{{color}}</p>
+    <p id="{{color}}" style="color:{{color}}">{{color}}</p>
 </template>

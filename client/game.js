@@ -3,8 +3,10 @@ UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
 
-
 if (Meteor.isClient) {
+
+    console.log(this.userId);
+    console.log('top');
 
     Meteor.subscribe('userEntries', function () {
     });
@@ -17,6 +19,34 @@ if (Meteor.isClient) {
             if (UserColors.find({userid:this.userId}).count() === 0) {
                 var userColor = ("#" + Math.random().toString(16).slice(2, 8));
                 UserColors.insert({userid:this.userId, color:userColor});
+
+                var idOfCurrent = this.userId + "";
+
+                console.log('id is now ' + idOfCurrent);
+
+                Template.userEntries.UserColors = function () {
+                    //console.log('current is id');
+                    //console.log(idOfCurrent);
+
+
+
+                    return UserColors.find();
+                }
+
+                Template.userEntry.idMarker = function (idOfCurrent) {
+
+                    var stuff = [idOfCurrent, UserColors.find()]
+                    return idOfCurrent;
+                    /*
+                    for(var i =0; i < stuff.length; i++){
+                        return stuff[i];
+                    }
+
+                    */
+                    //return UserColors.find();
+                }
+
+
             }
         });
 
@@ -52,6 +82,7 @@ if (Meteor.isClient) {
             }
         };
     };
+
 
     Template.userInput.events = {};
     Template.userInput.events[okcancel_events('#inputofuser')] = make_okcancel_handler({
@@ -90,6 +121,10 @@ if (Meteor.isClient) {
         return UserEntries.find();
     }
 
+    Handlebars.registerHelper('getStatusColor', function (color) {
+        return color;
+    });
+
     Template.phrases.Phrases = function () {
         return Phrases.find();
     };
@@ -97,6 +132,8 @@ if (Meteor.isClient) {
     Template.userColors.UserColors = function () {
         return UserColors.find();
     };
+
+
 
     Template.details.creatorName = function () {
         var owner = this.userId
