@@ -9,6 +9,7 @@
 <template name="master">
     <div id="wrapper">
         <div id="leftOuter">
+          
             {{> details}}
             {{> userInput}}
             {{> phrases}}
@@ -20,6 +21,11 @@
             {{> userColors}}
         </div>
     </div>
+</template>
+
+<template name="idMarker">
+
+    <p>{{idMarker}}</p>
 </template>
 
 <template name="details">
@@ -46,7 +52,7 @@
 
 <template name="userEntry">
 
-    <p class="{{idMarker}}">{{userEntry}}</p>
+    <p>{{userEntry}}</p>
 </template>
 
 
@@ -73,5 +79,6 @@
 </template>
 
 <template name="color">
-    <p id="{{color}}" style="color:{{color}}">{{color}}</p>
+    
+    <p id="{{color}}" style="color:{{color}}">{{color}}</p>   
 </template>

@@ -22,7 +22,7 @@ if (Meteor.isClient) {
 
                 var idOfCurrent = this.userId + "";
 
-                console.log('id is now ' + idOfCurrent);
+                
 
                 Template.userEntries.UserColors = function () {
                     //console.log('current is id');
@@ -33,26 +33,16 @@ if (Meteor.isClient) {
                     return UserColors.find();
                 }
 
-                Template.userEntry.idMarker = function (idOfCurrent) {
-
-                    var stuff = [idOfCurrent, UserColors.find()]
-                    return idOfCurrent;
-                    /*
-                    for(var i =0; i < stuff.length; i++){
-                        return stuff[i];
-                    }
-
-                    */
-                    //return UserColors.find();
-                }
-
+                
 
             }
         });
 
-    }
+console.log('id is now ' + this.userId);
+//begin
 
-    ////////// Helpers for in-place editing //////////
+
+  ////////// Helpers for in-place editing //////////
 
     // Returns an event_map key for attaching "ok/cancel" events to
     // a text input (given by selector)
@@ -88,6 +78,7 @@ if (Meteor.isClient) {
     Template.userInput.events[okcancel_events('#inputofuser')] = make_okcancel_handler({
         ok:function (text, event) {
 
+            console.log('below the id is now ' + this.id);
             //onsole.log(Session.get());
             //var another = Phrases.findOne(Session.get("something"));
             //console.log(another);
@@ -115,7 +106,11 @@ if (Meteor.isClient) {
             event.target.value = "";
 
         }
-    });
+    }); //end  Template.userInput.events[okcancel_events('#inputofuser')]
+//end
+    }
+
+  
 
     Template.userEntries.userEntries = function () {
         return UserEntries.find();
