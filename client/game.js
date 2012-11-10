@@ -72,6 +72,10 @@ console.log('id is now ' + this.userId);
             }
         };
     };
+    
+    function getUserId(){
+      return this.userId;
+    }
 
 
     Template.userInput.events = {};
@@ -95,7 +99,11 @@ console.log('id is now ' + this.userId);
             }
 
             if (onlyAlphabets(inputStuff.value) === true) {
-                UserEntries.insert({userEntry:inputStuff.value});
+                console.log('attempt change');
+                
+                UserEntries.insert({userId: getUserId(), userEntry:inputStuff.value});
+                //console.log(UserEntries.find());
+                console.log(UserColors.find({},{userId: getUserId()}).fetch());
                 $('#errorMessage').html("");
                 console.log($('.phrase').first().html());
             }
