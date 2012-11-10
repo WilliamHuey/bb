@@ -101,8 +101,15 @@ console.log('id is now ' + this.userId);
             if (onlyAlphabets(inputStuff.value) === true) {
                 console.log('attempt change');
                 
-                var colorOfUser = UserColors.find({},{userId: getUserId()}).fetch()[0].color;
+                //console.log(getUserId());
+                var stuff = getUserId() + "";
+                //console.log(UserColors.find({},{userId: getUserId()}).fetch());
+  UserColors.find({},{fields: {userId: getUserId()}});
+                console.log(UserColors.find({userid: getUserId()}).fetch()[0].color);
+                //console.log(UserColors.find({userId: getUserId()}).fetch());
                 
+                var colorOfUser = UserColors.find({userid: getUserId()}).fetch()[0].color;
+                console.log(colorOfUser);
                 UserEntries.insert({userId: getUserId(), userEntry:inputStuff.value, userColor:colorOfUser});
                 //console.log(UserEntries.find());
                 //console.log(UserColors.find({},{userId: getUserId()}));
@@ -134,10 +141,6 @@ console.log('id is now ' + this.userId);
 
     Template.phrases.Phrases = function () {
         return Phrases.find();
-    };
-
-    Template.userColors.UserColors = function () {
-        return UserColors.find();
     };
 
 
