@@ -47,7 +47,7 @@ console.log('id is now ' + this.userId);
     // Returns an event_map key for attaching "ok/cancel" events to
     // a text input (given by selector)
     var okcancel_events = function (selector) {
-        return 'keyup ' + selector + ', keydown ' + selector + ', focusout ' + selector;
+        return 'keyup ' + selector + ', keypress ' + selector + ', focusout ' + selector;
     };
 
     // Creates an event handler for interpreting "escape", "return", and "blur"
@@ -59,7 +59,7 @@ console.log('id is now ' + this.userId);
         };
 
         return function (evt) {
-            if (evt.type === "keydown" && evt.which === 27) {
+            if (evt.type === "keypress" && evt.which === 27) {
                 // escape = cancel
                 cancel.call(this, evt);
             } else if (evt.type === "keyup" && evt.which === 13) {
@@ -81,12 +81,63 @@ console.log('id is now ' + this.userId);
     Template.userInput.events = {};
     Template.userInput.events[okcancel_events('#inputofuser')] = make_okcancel_handler({
         ok:function (text, event) {
+        //console.log('here');
+            //status indicator if entry is permitted or not
+    var allowedEntry = false;
 
-            console.log('below the id is now ' + this.id);
-            //onsole.log(Session.get());
-            //var another = Phrases.findOne(Session.get("something"));
-            //console.log(another);
+    //clear out the input field upon refresh
+    $('#inputStuff').val('');
 
+    //detecting any changes in the input field
+    $('#inputofuser').on('input propertychange',
+    function(event) {
+
+    var $thisValue = $(this).val();
+    var letterNumber = /^[a-zA-Z]+$/;
+    
+    
+        //adding an error if number is detected
+    if (! ($thisValue.match(letterNumber)) == true && $thisValue.length !== 0) {
+        //show the error message
+        $('.errorMessageHidden').addClass('showError').removeClass('errorMessageHidden');
+        allowedEntry = false;
+    }
+
+    //removing the error message if seen before
+    if (! ($thisValue.match(letterNumber)) == false || $thisValue.length === 0) {
+        //remove the error message
+        $('.showError').addClass('errorMessageHidden').removeClass('showError');
+        allowedEntry = false;
+    }
+
+    //permitting the entry if no numbers detected and not empty length
+    if ($thisValue.match(letterNumber) && $thisValue.length !== 0) {
+        //valid input; enter is allowed on input field
+        allowedEntry = true;
+    }
+});
+
+$('#inputofuser').on("keypress",
+function(event) {
+
+    if (event.which === 13 && allowedEntry === true) {
+
+        var $this = $(this);
+        var $thisValue = $(this).val();
+
+        //output the valid result
+        //$('#outputGuess').append(" " + $thisValue);
+        
+        var colorOfUser = UserColors.find({userid: getUserId()}).fetch()[0].color;
+  
+                UserEntries.insert({userId: getUserId(), userEntry:$thisValue, userColor:colorOfUser});
+
+        //clear the input field
+        $this.val('');
+    }
+});
+
+            /*
             var inputStuff = document.getElementById('inputofuser');
 
             function onlyAlphabets(inputtxt) {
@@ -99,22 +150,11 @@ console.log('id is now ' + this.userId);
             }
 
             if (onlyAlphabets(inputStuff.value) === true) {
-                console.log('attempt change');
-                
-                //console.log(getUserId());
-                var stuff = getUserId() + "";
-                //console.log(UserColors.find({},{userId: getUserId()}).fetch());
-  UserColors.find({},{fields: {userId: getUserId()}});
-                console.log(UserColors.find({userid: getUserId()}).fetch()[0].color);
-                //console.log(UserColors.find({userId: getUserId()}).fetch());
-                
+    
                 var colorOfUser = UserColors.find({userid: getUserId()}).fetch()[0].color;
-                console.log(colorOfUser);
+  
                 UserEntries.insert({userId: getUserId(), userEntry:inputStuff.value, userColor:colorOfUser});
-                //console.log(UserEntries.find());
-                //console.log(UserColors.find({},{userId: getUserId()}));
-                //console.log(UserColors.find({},{userId: getUserId()}).fetch());
-                 //console.log(UserColors.find({},{userId: getUserId()}).fetch()[0].color);
+          
                 $('#errorMessage').html("");
                 console.log($('.phrase').first().html());
             }
@@ -123,6 +163,8 @@ console.log('id is now ' + this.userId);
             }
 
             event.target.value = "";
+            */
+
 
         }
     }); //end  Template.userInput.events[okcancel_events('#inputofuser')]

@@ -26,6 +26,13 @@ body, html{
 #errorMessage{
 	float: right;
 }
+
+.errorMessageHidden{
+	visibility: hidden;
+}
+.showError{
+	visibility: visible;
+}
 .phrase{
 	float: left;
 	width: 50%;
