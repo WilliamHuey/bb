@@ -101,9 +101,13 @@ console.log('id is now ' + this.userId);
             if (onlyAlphabets(inputStuff.value) === true) {
                 console.log('attempt change');
                 
-                UserEntries.insert({userId: getUserId(), userEntry:inputStuff.value});
+                var colorOfUser = UserColors.find({},{userId: getUserId()}).fetch()[0].color;
+                
+                UserEntries.insert({userId: getUserId(), userEntry:inputStuff.value, userColor:colorOfUser});
                 //console.log(UserEntries.find());
-                console.log(UserColors.find({},{userId: getUserId()}).fetch());
+                //console.log(UserColors.find({},{userId: getUserId()}));
+                //console.log(UserColors.find({},{userId: getUserId()}).fetch());
+                 //console.log(UserColors.find({},{userId: getUserId()}).fetch()[0].color);
                 $('#errorMessage').html("");
                 console.log($('.phrase').first().html());
             }
