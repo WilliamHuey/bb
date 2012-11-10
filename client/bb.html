@@ -17,9 +17,6 @@
         <div id="rightOuter">
             {{> userEntries}}
         </div>
-        <div id="colorsOfUsers">
-            {{> userColors}}
-        </div>
     </div>
 </template>
 
@@ -51,11 +48,8 @@
 </template>
 
 <template name="userEntry">
-
-    <p>{{userEntry}}</p>
+    <p style="color:{{userColor}}">{{userEntry}}</p>
 </template>
-
-
 
 <template name="phrases">
     {{#if currentUser}}
@@ -72,13 +66,4 @@
     <p class="category">{{category}}</p>
 </template>
 
-<template name="userColors">
-    {{#each UserColors}}
-        {{> color}}
-    {{/each}}
-</template>
 
-<template name="color">
-    
-    <p id="{{color}}" style="color:{{color}}">{{color}}</p>   
-</template>
