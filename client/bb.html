@@ -12,6 +12,7 @@
             {{> details}}
             {{> userInput}}
             {{> phrases}}
+            {{> phraseInformationHeader}}
         </div>
         <div id="rightOuter">
             {{> userEntries}}
@@ -57,20 +58,24 @@
         {{#each Phrases}}
             {{> phrase}}
         {{/each}}
-
-    {{/if}}
+ {{/if}}
 </template>
 
 <template name="phrase">
     <p class="phrase">{{phrase}}</p>
     <p class="category">{{category}}</p>
-    {{phraseLength}}
-
-    <p>
-        {{nonWordIndex}}
-        
-    </p>
-
+    {{> phraseInformationHeader}}
 </template>
 
+<template name="phraseInformationHeader">
+   {{#each phraseInfo}}
+      {{>phraseInformation}}
+    {{/each}}
+</template>
+
+<template name="phraseInformation">
+
+    {{location}} {{type}}
+
+</template>
 

@@ -90,6 +90,9 @@ if (Meteor.isClient) {
         return Phrases.find();
     };
 
+    Template.phraseInformationHeader.Phrases = function () {
+        return Phrases.find();
+    };
     /*
      Template.details.creatorName = function () {
      var owner = this.userId

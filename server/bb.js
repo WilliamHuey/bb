@@ -2,17 +2,17 @@ Phrases = new Meteor.Collection("phrases");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
- //auto publish is on by default
- //Phrases = Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
- Meteor.publish('phrases', function () {
+//auto publish is on by default
+//Phrases = Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
+Meteor.publish('phrases', function () {
     return Phrases.find();
- //console.log(Phrases.find({},{phrase: "Bunch of Words", category: "Second Category"}));
- //return Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
- });
+    //console.log(Phrases.find({},{phrase: "Bunch of Words", category: "Second Category"}));
+    //return Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
+});
 
- Meteor.publish('userEntries', function () {
+Meteor.publish('userEntries', function () {
     return UserEntries.find();
- });
+});
 
 Meteor.publish('userColors', function () {
     return UserColors.find();
@@ -32,7 +32,7 @@ if (Meteor.isServer) {
 
         //UserColors.insert({session:Math.random()});
         //console.log('server restarted');
-        /*
+
         var phrases = [
             ["Some Phrase", "First Category"],
             ["Another Phrase", "Second Category"],
@@ -41,16 +41,17 @@ if (Meteor.isServer) {
             ["Some more words", "First Category"],
             ["Bunch of Words", "Second Category"]
         ];
-        */
 
-        var phrases = [
-            ["Some Phrase", "Some Phrase"],
-            ["Another Phrase", "Another Phrase"],
-            ["Group of Words", "Group of Words"],
-            ["Words in a Group", "Words in a Group"],
-            ["Some more words", "Some more words"],
-            ["Bunch of Words", "Bunch of Words"]
-        ];
+        /*
+         var phrases = [
+         ["Some Phrase", "Some Phrase"],
+         ["Another Phrase", "Another Phrase"],
+         ["Group of Words", "Group of Words"],
+         ["Words in a Group", "Words in a Group"],
+         ["Some more words", "Some more words"],
+         ["Bunch of Words", "Bunch of Words"]
+         ];
+         */
 
         function getRandomizer(a, b) {
             return Math.floor(Math.random() * (1 + b - a)) + a;
@@ -63,23 +64,37 @@ if (Meteor.isServer) {
 
         var phrase = phrases[indexPhrase][0];
 
-        var nonWordIndex = [];
+        //var nonWordIndex = [];
+
+        //var contents = {
+
+        var phraseInfo = {phraseIndices: []};
         //console.log('phrase length is ' + lengthOfPhrase);
         //console.log('phrase is ' + phrase);
         //console.log(phrase[0]);
 
         Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
 
-        for(var i=0; i< lengthOfPhrase; i++){
-            if (phrase[i].match(/^[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/)){
-                nonWordIndex.push(i);
+        for (var i = 0; i < lengthOfPhrase; i++) {
+
+            if (phrase[i].match(/^[a-zA-Z]+$/)) {
+                phraseInfo.phraseIndices.push({
+                    location: i,
+                    type: "word"
+                })
+            } else if (phrase[i].match(/^[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/)){
+                //nonWordIndex.push(i);
+                phraseInfo.phraseIndices.push({
+                    location: i,
+                    type: "space"
+                })
             }
         }
-        Phrases.insert({phraseLength: lengthOfPhrase, nonWordIndex: nonWordIndex});
-
-
-
-
+        //console.log();
+        console.log(phraseInfo.phraseIndices);
+        Phrases.update({},{"$addToSet" : {phraseInfo: phraseInfo.phraseIndices[0]}});
+        //Phrases.insert({phraseLength: lengthOfPhrase, phraseInfo: phraseInfo});
+        console.log(Phrases.find().fetch());
 
     });
 }
