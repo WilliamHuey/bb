@@ -57,22 +57,27 @@ if (Meteor.isServer) {
         }
 
         var indexPhrase = getRandomizer(0, (phrases.length - 1));
+        console.log('random index is ' + indexPhrase);
 
         var lengthOfPhrase = phrases[indexPhrase][0].length;
 
         var phrase = phrases[indexPhrase][0];
 
+        var nonWordIndex = [];
+        //console.log('phrase length is ' + lengthOfPhrase);
+        //console.log('phrase is ' + phrase);
+        //console.log(phrase[0]);
 
-        console.log('phrase length is ' + lengthOfPhrase);
-        console.log('phrase is ' + phrase);
-        console.log(phrase[0]);
+        Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
 
         for(var i=0; i< lengthOfPhrase; i++){
-
+            if (phrase[i].match(/^[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/)){
+                nonWordIndex.push(i);
+            }
         }
-        
-        //Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
-        Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
+        Phrases.insert({phraseLength: lengthOfPhrase, nonWordIndex: nonWordIndex});
+
+
 
 
 

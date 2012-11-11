@@ -57,12 +57,20 @@
         {{#each Phrases}}
             {{> phrase}}
         {{/each}}
+
     {{/if}}
 </template>
 
 <template name="phrase">
     <p class="phrase">{{phrase}}</p>
     <p class="category">{{category}}</p>
+    {{phraseLength}}
+
+    <p>
+        {{nonWordIndex}}
+        
+    </p>
+
 </template>
 
 
