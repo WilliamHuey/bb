@@ -2,7 +2,6 @@ Phrases = new Meteor.Collection("phrases");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
-
  //auto publish is on by default
  //Phrases = Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
  Meteor.publish('phrases', function () {
@@ -19,7 +18,6 @@ Meteor.publish('userColors', function () {
     return UserColors.find();
 });
 
-
 var displayName = function (user) {
     if (user.profile && user.profile.name)
         return user.profile.name;
@@ -34,6 +32,7 @@ if (Meteor.isServer) {
 
         //UserColors.insert({session:Math.random()});
         //console.log('server restarted');
+        /*
         var phrases = [
             ["Some Phrase", "First Category"],
             ["Another Phrase", "Second Category"],
@@ -42,12 +41,37 @@ if (Meteor.isServer) {
             ["Some more words", "First Category"],
             ["Bunch of Words", "Second Category"]
         ];
+        */
+
+        var phrases = [
+            ["Some Phrase", "Some Phrase"],
+            ["Another Phrase", "Another Phrase"],
+            ["Group of Words", "Group of Words"],
+            ["Words in a Group", "Words in a Group"],
+            ["Some more words", "Some more words"],
+            ["Bunch of Words", "Bunch of Words"]
+        ];
 
         function getRandomizer(a, b) {
             return Math.floor(Math.random() * (1 + b - a)) + a;
         }
 
         var indexPhrase = getRandomizer(0, (phrases.length - 1));
+
+        var lengthOfPhrase = phrases[indexPhrase][0].length;
+
+        var phrase = phrases[indexPhrase][0];
+
+
+        console.log('phrase length is ' + lengthOfPhrase);
+        console.log('phrase is ' + phrase);
+        console.log(phrase[0]);
+
+        for(var i=0; i< lengthOfPhrase; i++){
+
+        }
+        
+        //Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
         Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
 
 
