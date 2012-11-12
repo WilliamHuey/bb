@@ -3,26 +3,55 @@ Phrases = new Meteor.Collection("phrases");
 Games   = new Meteor.Collection("games");
 Guesses = new Meteor.Collection("guesses");
 
-
-
-
-//auto publish is on by default, and is removed by meteor remove autopublish
-Meteor.publish('phrases', function () {
-    return Phrases.find();
+Players.allow({
+  insert: function(userId, player) {
+    return false;
+  },
+  update: function(userId, players, fields, modifier) {
+    return false;
+  },
+  remove: function(userId, players) {
+    return false;
+  }
 });
 
-Meteor.publish('userEntries', function () {
-    return UserEntries.find();
+Phrases.allow({
+  insert: function(userId, phrase) {
+    return false;
+  },
+  update: function(userId, phrases, fields, modifier) {
+    return false;
+  },
+  remove: function(userId, phrases) {
+    return false;
+  }
 });
 
-Meteor.publish('userColors', function () {
-    return UserColors.find();
+Games.allow({
+  insert: function(userId, game) {
+    // allow text input
+    return false
+  },
+  update: function(userId, games, fields, modifier) {
+    return false;
+  },
+  remove: function(userId, games) {
+    return false;
+  }
 });
 
-Meteor.publish('phraseInformation', function () {
-    return PhraseInformation.find();
+Guesses.allow({
+  insert: function(userId, guess) {
+    // allow text input
+    return false;
+  },
+  update: function(userId, guesses, fields, modifier) {
+    return false;
+  },
+  remove: function(userId, guesses) {
+    return false;
+  }
 });
-
 
 if (Meteor.isServer) {
     Meteor.startup(function () {
