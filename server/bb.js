@@ -1,7 +1,7 @@
+Players = new Meteor.Collection("players");
 Phrases = new Meteor.Collection("phrases");
-PhraseInformation = new Meteor.Collection("phraseInformation");
-UserEntries = new Meteor.Collection("userEntries");
-UserColors = new Meteor.Collection("userColors");
+Games   = new Meteor.Collection("games");
+Guesses = new Meteor.Collection("guesses");
 
 
 
