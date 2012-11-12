@@ -3,6 +3,8 @@ PhraseInformation = new Meteor.Collection("phraseInformation");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
+
+
 if (Meteor.isClient) {
 
     Meteor.subscribe('userEntries', function () {
@@ -17,7 +19,6 @@ if (Meteor.isClient) {
     //only subscribe to the collections if user is logged in
     //users not logged in should not have access to any collections
     if (this.userId) {
-        console.log('here');
         Meteor.subscribe('userColors', function () {
             //make sure the user is logged in before a color is assigned
             if (UserColors.find({userid:this.userId}).count() === 0) {
@@ -35,6 +36,8 @@ if (Meteor.isClient) {
         Template.userEntries.UserColors = function () {
             return UserColors.find();
         };
+
+
 
         Template.userInput.events({
             'keypress': function (event) {
@@ -76,6 +79,11 @@ if (Meteor.isClient) {
                     //output the valid result
                     var colorOfUser = UserColors.find({userid: getUserId()}).fetch()[0].color;
                     UserEntries.insert({userId: getUserId(), userEntry:$thisValue, userColor:colorOfUser});
+
+                    console.log(UserEntries.find().fetch());
+
+
+
                     //clear the input field upon successful enter
                     $this.val('');
                 }

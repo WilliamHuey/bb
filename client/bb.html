@@ -10,6 +10,7 @@
     <div id="wrapper">
         <div id="leftOuter">
             {{> userInput}}
+            {{> resultOfInput}}
             {{> phrases}}
             {{> phraseInformationHeader}}
         </div>
@@ -67,6 +68,10 @@
 			<h1 class="wordToGuess {{location}} {{type}}">#</h1>
 			<div class="underlineForWord {{type}}"></div>
 		</div>
+</template>
+
+<template name="resultOfInput">
+    <p>Your result of input</p>
 </template>
 
 

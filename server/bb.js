@@ -3,6 +3,9 @@ PhraseInformation = new Meteor.Collection("phraseInformation");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
+
+
+
 //auto publish is on by default, and is removed by meteor remove autopublish
 Meteor.publish('phrases', function () {
     return Phrases.find();
@@ -20,6 +23,7 @@ Meteor.publish('phraseInformation', function () {
     return PhraseInformation.find();
 });
 
+
 if (Meteor.isServer) {
     Meteor.startup(function () {
 
@@ -27,7 +31,7 @@ if (Meteor.isServer) {
         var clearOutOldCollections = [UserEntries, Phrases, UserColors, PhraseInformation];
         var clearOutOldCollectionsLength = clearOutOldCollections.length;
 
-        for(var i=0; i < clearOutOldCollectionsLength; i++){
+        for (var i = 0; i < clearOutOldCollectionsLength; i++) {
             clearOutOldCollections[i].remove({});
         }
 
@@ -62,11 +66,50 @@ if (Meteor.isServer) {
             //determine which position is an alphabet
             if (phrase[i].match(/^[a-zA-Z]+$/)) {
                 PhraseInformation.insert({location: i, type: "letter"});
-            //determine if position is a space
-            } else if (phrase[i].match(/^[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/)){
+                //determine if position is a space
+            } else if (phrase[i].match(/^[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/)) {
                 PhraseInformation.insert({location: i, type: "space"});
             }
 
         }
+
+
+        
+
+        var cursor = UserEntries.find({});
+
+        //for detecting user inputs that are written to the UserEntries collection
+        var handle = cursor.observe({
+            added: function(input){
+                console.log('something was added by the user');
+               //console.log(input.userEntry);
+
+                var actualPhrase = Phrases.find().fetch()[0].phrase.toLowerCase();
+
+                console.log('the actual phrase is ' + actualPhrase);
+                var userInput = input.userEntry + "";
+
+                //console.log();
+
+                console.log(actualPhrase.indexOf(userInput));
+
+                //not quite sure why the indexof is not showing a positive value for
+                //letters that occur more than once
+
+                if(actualPhrase.indexOf(userInput) >0){
+                    console.log('user has guessed right');
+                    //var positivePoints = 10;
+                    //UserEntries.insert({rightGuess: (0 + positivePoints)});
+                    UserEntries.update({"$inc" : {"rightGuess" : 10}});
+                }
+                else{
+                    console.log('user is wrong')
+                }
+
+
+
+            }
+        })
+
     });
 }
