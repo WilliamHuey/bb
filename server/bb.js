@@ -53,6 +53,36 @@ Guesses.allow({
   }
 });
 
+// Makeshift validation library
+var Validate = {
+  maxMin: function(text) {
+    
+  }
+}
+
+Meteor.methods({
+  createPhrase: function(options) {
+    options = options || {};
+    if(!(typeof options.text === "string" && options.text.length &&
+         typeof options.category === "string" && options.category.length))
+      throw new Meteor.Error(400, "Required parameter missing");
+      
+    return Phrases.insert({
+      text: options.text,
+      category: options.category
+    });
+  },
+  createPlayer: function(options) {
+    ;
+  },
+  createGuess: function(options) {
+    ;
+  },
+  createGame: function(options) {
+    ;
+  }
+});
+
 if (Meteor.isServer) {
     Meteor.startup(function () {
 
@@ -66,16 +96,17 @@ if (Meteor.isServer) {
 
         //the phrases to choose from
         var phrases = [
-            { phrase: "Some Phrase", category : "First Category" },
-            { phrase: "Another Phrase", category: "Second Category" },
-            { phrase: "Group of Words", category: "First Category" },
-            { phrase: "Words in a Group", category: "Second Category" },
-            { phrase: "Some more words", category: "First Category" },
-            { phrase: "Bunch of Words", category: "Second Category" }
+            { text: "Some Phrase", category : "First Category" },
+            { text: "Another Phrase", category: "Second Category" },
+            { text: "Group of Words", category: "First Category" },
+            { text: "Words in a Group", category: "Second Category" },
+            { text: "Some more words", category: "First Category" },
+            { text: "Bunch of Words", category: "Second Category" }
         ];
+        
         for(var i = 0; i < phrases.length; i++) {
-          Phrases.insert(phrases[i]);
+          Meteor.call('createPhrase', phrases[i], function(err, res) {
+          });
         }
-        console.log(Phrases.find({}).fetch());
     });
 }
