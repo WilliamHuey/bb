@@ -11,12 +11,12 @@ body, html{
 	background-color: orange;
 }
 #leftOuter{
-	width: 35%;
+	width: 50%;
 	background-color: yellow;
 	float: left;
 }
 #rightOuter{
-	width: 65%;
+	width: 50%;
 	background-color: #DCDCDC;
 	float: left;
 }
@@ -26,7 +26,6 @@ body, html{
 #errorMessage{
 	float: right;
 }
-
 .errorMessageHidden{
 	visibility: hidden;
 }
@@ -40,4 +39,22 @@ body, html{
 .category{
 	float: right;
 	width: 50%;
+}
+.wordWrapper{
+	width: 3%;
+	float: left;
+	margin-left: 2em;
+}
+.wordToGuess{
+	width: 0.5em;
+	background-color: red;
+	margin: auto;
+}
+.underlineForWord{
+	width: 100%;
+	height: 0.25em;
+	background-color: black;
+}
+.wordToGuess{
+	visibility: hidden;
 }

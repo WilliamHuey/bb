@@ -63,7 +63,10 @@
 </template>
 
 <template name="phraseInformation">
-    {{location}} {{type}}
+    <div class="wordWrapper">
+			<h1 class="wordToGuess {{location}} {{type}}">#</h1>
+			<div class="underlineForWord {{type}}"></div>
+		</div>
 </template>
 
 
