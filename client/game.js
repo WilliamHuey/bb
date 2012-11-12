@@ -1,4 +1,5 @@
 Phrases = new Meteor.Collection("phrases");
+PhraseInformation = new Meteor.Collection("phraseInformation");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
@@ -8,6 +9,9 @@ if (Meteor.isClient) {
     });
 
     Meteor.subscribe('phrases', function () {
+    });
+
+    Meteor.subscribe('phraseInformation', function () {
     });
 
     if (this.userId) {
@@ -90,10 +94,10 @@ if (Meteor.isClient) {
         return Phrases.find();
     };
 
-    Template.phraseInformationHeader.Phrases = function () {
-        return Phrases.find();
+    Template.phraseInformationHeader.phraseInfo = function () {
+        return PhraseInformation.find();
     };
-    /*
+/*
      Template.details.creatorName = function () {
      var owner = this.userId
      console.log(owner);

@@ -1,4 +1,5 @@
 Phrases = new Meteor.Collection("phrases");
+PhraseInformation = new Meteor.Collection("phraseInformation");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
@@ -16,6 +17,10 @@ Meteor.publish('userEntries', function () {
 
 Meteor.publish('userColors', function () {
     return UserColors.find();
+});
+
+Meteor.publish('phraseInformation', function () {
+    return PhraseInformation.find();
 });
 
 var displayName = function (user) {
@@ -68,33 +73,42 @@ if (Meteor.isServer) {
 
         //var contents = {
 
-        var phraseInfo = {phraseIndices: []};
+        //var phraseInfo = {phraseIndices: []};
         //console.log('phrase length is ' + lengthOfPhrase);
         //console.log('phrase is ' + phrase);
         //console.log(phrase[0]);
 
         Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
 
+        console.log(Phrases.find().fetch());
+
         for (var i = 0; i < lengthOfPhrase; i++) {
 
             if (phrase[i].match(/^[a-zA-Z]+$/)) {
-                phraseInfo.phraseIndices.push({
-                    location: i,
-                    type: "word"
-                })
+
+                PhraseInformation.insert({location: i, type: "letter"});
+                // PhraseInformation.insert({infoOnPhrase: phraseInfo});
             } else if (phrase[i].match(/^[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/)){
                 //nonWordIndex.push(i);
-                phraseInfo.phraseIndices.push({
-                    location: i,
-                    type: "space"
-                })
+          
+                 PhraseInformation.insert({location: i, type: "space"});
             }
         }
+
+        console.log(PhraseInformation.find().fetch());
         //console.log();
-        console.log(phraseInfo.phraseIndices);
-        Phrases.update({},{"$addToSet" : {phraseInfo: phraseInfo.phraseIndices[0]}});
+        //console.log(phraseInfo.phraseIndices);
+
+        //Phrases.update({},{"$addToSet" : {phraseInfo: phraseInfo.phraseIndices}});
+
+        //PhraseInformation.insert({infoOnPhrase: phraseInfo})
+
         //Phrases.insert({phraseLength: lengthOfPhrase, phraseInfo: phraseInfo});
-        console.log(Phrases.find().fetch());
+        //console.log(Phrases.find().fetch());
+        //console.log(Phrases.find().fetch()[0].phraseInfo[0]);
+
+
+        //console.log(PhraseInformation.find().fetch());
 
     });
 }
