@@ -34,6 +34,7 @@ if (Meteor.isServer) {
         UserEntries.remove({});
         Phrases.remove({});
         UserColors.remove({});
+        PhraseInformation.remove({});
 
         //UserColors.insert({session:Math.random()});
         //console.log('server restarted');
@@ -80,22 +81,30 @@ if (Meteor.isServer) {
 
         Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
 
+       console.log('phrase is');
         console.log(Phrases.find().fetch());
+        //console.log("phrase information in the beginning")
+        //console.log(PhraseInformation.find().fetch());
 
         for (var i = 0; i < lengthOfPhrase; i++) {
 
             if (phrase[i].match(/^[a-zA-Z]+$/)) {
+                 console.log('counter is _______________________________________________________________' + i);
+
 
                 PhraseInformation.insert({location: i, type: "letter"});
+                //i = lengthOfPhrase;
                 // PhraseInformation.insert({infoOnPhrase: phraseInfo});
             } else if (phrase[i].match(/^[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/)){
                 //nonWordIndex.push(i);
           
                  PhraseInformation.insert({location: i, type: "space"});
             }
+
         }
 
-        console.log(PhraseInformation.find().fetch());
+console.log(PhraseInformation.find().fetch());
+        //console.log(PhraseInformation.find().fetch());
         //console.log();
         //console.log(phraseInfo.phraseIndices);
 
