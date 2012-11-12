@@ -3,11 +3,32 @@
 </head>
 
 <body>
-    {{>master}}
+  <div id="wrapper">
+    {{>negotiate}}
+  </div>
 </body>
 
-<template name="master">
-    <div id="wrapper">
+<template name="negotiate">
+    {{> loggedOut}} 
+    {{> lobby}}
+</template>
+
+<template name="loggedOut">
+    {{# currentUser}}
+        <p>Please login or create an account to play.</p>
+    {{/currentUser}}
+</template>
+
+<template name="lobby">
+    {{#if currentUser}}
+        {{> title}}
+        {{> createButton}}
+        {{> listOfGames}}
+    {{/if}}
+</template>
+
+<template name="gamePlay">
+    {{#if currentUser}}
         <div id="leftOuter">
             {{> userInput}}
             {{> resultOfInput}}
@@ -17,27 +38,21 @@
         <div id="rightOuter">
             {{> userEntries}}
         </div>
-    </div>
+    {{/if}}
 </template>
 
 <template name="userInput">
     <div id="login-box">{{loginButtons}}</div>
-    {{#if currentUser}}
         <p>Currently Logged in</p>
         <p>Hey, enter some text here.</p>
         <input type="text" id="inputofuser" name="inputofuser">
         <p class="errorMessageHidden">Please enter only letters.<p>
-    {{else}}
-        <p>Please login or create an account to play.</p>
-    {{/if}}
 </template>
 
 <template name="userEntries">
-    {{#if currentUser}}
-        {{#each userEntries}}
-            {{> userEntry}}
-        {{/each}}
-    {{/if}}
+    {{#each userEntries}}
+        {{> userEntry}}
+    {{/each}}
 </template>
 
 <template name="userEntry">
@@ -45,11 +60,9 @@
 </template>
 
 <template name="phrases">
-    {{#if currentUser}}
-        {{#each Phrases}}
-            {{> phrase}}
-        {{/each}}
- {{/if}}
+    {{#each Phrases}}
+        {{> phrase}}
+    {{/each}}
 </template>
 
 <template name="phrase">
