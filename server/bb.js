@@ -3,12 +3,9 @@ PhraseInformation = new Meteor.Collection("phraseInformation");
 UserEntries = new Meteor.Collection("userEntries");
 UserColors = new Meteor.Collection("userColors");
 
-//auto publish is on by default
-//Phrases = Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
+//auto publish is on by default, and is removed by meteor remove autopublish
 Meteor.publish('phrases', function () {
     return Phrases.find();
-    //console.log(Phrases.find({},{phrase: "Bunch of Words", category: "Second Category"}));
-    //return Phrases.find({},{phrase: "Some Phrase", category: "First Category"});
 });
 
 Meteor.publish('userEntries', function () {
@@ -23,22 +20,18 @@ Meteor.publish('phraseInformation', function () {
     return PhraseInformation.find();
 });
 
-var displayName = function (user) {
-    if (user.profile && user.profile.name)
-        return user.profile.name;
-    return user.emails[0].address;
-};
-
 if (Meteor.isServer) {
     Meteor.startup(function () {
-        UserEntries.remove({});
-        Phrases.remove({});
-        UserColors.remove({});
-        PhraseInformation.remove({});
 
-        //UserColors.insert({session:Math.random()});
-        //console.log('server restarted');
+        //clear out the old collections when restarting the server
+        var clearOutOldCollections = [UserEntries, Phrases, UserColors, PhraseInformation];
+        var clearOutOldCollectionsLength = clearOutOldCollections.length;
 
+        for(var i=0; i < clearOutOldCollectionsLength; i++){
+            clearOutOldCollections[i].remove({});
+        }
+
+        //the phrases to choose from
         var phrases = [
             ["Some Phrase", "First Category"],
             ["Another Phrase", "Second Category"],
@@ -48,76 +41,32 @@ if (Meteor.isServer) {
             ["Bunch of Words", "Second Category"]
         ];
 
-        /*
-         var phrases = [
-         ["Some Phrase", "Some Phrase"],
-         ["Another Phrase", "Another Phrase"],
-         ["Group of Words", "Group of Words"],
-         ["Words in a Group", "Words in a Group"],
-         ["Some more words", "Some more words"],
-         ["Bunch of Words", "Bunch of Words"]
-         ];
-         */
-
-        function getRandomizer(a, b) {
+        //get a random number that is within the range of the phrases to choose from
+        function getRandomNumber(a, b) {
             return Math.floor(Math.random() * (1 + b - a)) + a;
         }
 
-        var indexPhrase = getRandomizer(0, (phrases.length - 1));
-        console.log('random index is ' + indexPhrase);
+        var indexPhrase = getRandomNumber(0, (phrases.length - 1));
 
+        //the random index allows us to get a random phrase
+        //get the random phrase length for iterating through
         var lengthOfPhrase = phrases[indexPhrase][0].length;
 
+        //the actual random phrase
         var phrase = phrases[indexPhrase][0];
 
-        //var nonWordIndex = [];
-
-        //var contents = {
-
-        //var phraseInfo = {phraseIndices: []};
-        //console.log('phrase length is ' + lengthOfPhrase);
-        //console.log('phrase is ' + phrase);
-        //console.log(phrase[0]);
-
+        //insert the random phrase into the phrase collection
         Phrases.insert({phrase:phrases[indexPhrase][0], category:phrases[indexPhrase][1]});
 
-       console.log('phrase is');
-        console.log(Phrases.find().fetch());
-        //console.log("phrase information in the beginning")
-        //console.log(PhraseInformation.find().fetch());
-
         for (var i = 0; i < lengthOfPhrase; i++) {
-
+            //determine which position is an alphabet
             if (phrase[i].match(/^[a-zA-Z]+$/)) {
-                 console.log('counter is _______________________________________________________________' + i);
-
-
                 PhraseInformation.insert({location: i, type: "letter"});
-                //i = lengthOfPhrase;
-                // PhraseInformation.insert({infoOnPhrase: phraseInfo});
+            //determine if position is a space
             } else if (phrase[i].match(/^[\t\n\v\f\r \u00a0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/)){
-                //nonWordIndex.push(i);
-          
-                 PhraseInformation.insert({location: i, type: "space"});
+                PhraseInformation.insert({location: i, type: "space"});
             }
 
         }
-
-console.log(PhraseInformation.find().fetch());
-        //console.log(PhraseInformation.find().fetch());
-        //console.log();
-        //console.log(phraseInfo.phraseIndices);
-
-        //Phrases.update({},{"$addToSet" : {phraseInfo: phraseInfo.phraseIndices}});
-
-        //PhraseInformation.insert({infoOnPhrase: phraseInfo})
-
-        //Phrases.insert({phraseLength: lengthOfPhrase, phraseInfo: phraseInfo});
-        //console.log(Phrases.find().fetch());
-        //console.log(Phrases.find().fetch()[0].phraseInfo[0]);
-
-
-        //console.log(PhraseInformation.find().fetch());
-
     });
 }

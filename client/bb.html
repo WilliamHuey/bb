@@ -9,25 +9,14 @@
 <template name="master">
     <div id="wrapper">
         <div id="leftOuter">
-            {{> details}}
             {{> userInput}}
             {{> phrases}}
-              {{>phraseInformationHeader}}
-
+            {{> phraseInformationHeader}}
         </div>
         <div id="rightOuter">
             {{> userEntries}}
         </div>
     </div>
-</template>
-
-<template name="idMarker">
-
-    <p>{{idMarker}}</p>
-</template>
-
-<template name="details">
-    {{creatorName}}
 </template>
 
 <template name="userInput">
@@ -47,8 +36,6 @@
         {{#each userEntries}}
             {{> userEntry}}
         {{/each}}
-
-
     {{/if}}
 </template>
 
@@ -67,10 +54,8 @@
 <template name="phrase">
     <p class="phrase">{{phrase}}</p>
     <p class="category">{{category}}</p>
-
 </template>
 
-        
 <template name="phraseInformationHeader">
    {{#each phraseInfo}}
        {{>phraseInformation}}

@@ -14,15 +14,19 @@ if (Meteor.isClient) {
     Meteor.subscribe('phraseInformation', function () {
     });
 
+    //only subscribe to the collections if user is logged in
+    //users not logged in should not have access to any collections
     if (this.userId) {
+        console.log('here');
         Meteor.subscribe('userColors', function () {
+            //make sure the user is logged in before a color is assigned
             if (UserColors.find({userid:this.userId}).count() === 0) {
                 //generate a color for the user
                 var userColor = ("#" + Math.random().toString(16).slice(2, 8));
+                //insert into the UserColors collection
                 UserColors.insert({userid:this.userId, color:userColor});
             }
         });
-        //console.log('id is now ' + this.userId);
 
         function getUserId() {
             return this.userId;
@@ -30,16 +34,14 @@ if (Meteor.isClient) {
 
         Template.userEntries.UserColors = function () {
             return UserColors.find();
-        }
+        };
 
-        //Template.userInput.events = {};
         Template.userInput.events({
             'keypress': function (event) {
 
                 //detecting any changes in the input field
                 $('#inputofuser').on('input propertychange',
                     function(event) {
-                        //console.log('onchange');
                         var $thisValue = $(this).val();
                         var letterOnly = /^[a-zA-Z]+$/;
 
@@ -78,29 +80,20 @@ if (Meteor.isClient) {
                     $this.val('');
                 }
             }
-        }); //end  Template.userInput.events[okcancel_events('#inputofuser')]
+        }); //end Template.userInput.events
+
+        Template.userEntries.userEntries = function () {
+            return UserEntries.find();
+        };
+
+        Template.phrases.Phrases = function () {
+            return Phrases.find();
+        };
+
+        Template.phraseInformationHeader.phraseInfo = function () {
+            return PhraseInformation.find();
+        };
     }
 
 
-    Template.userEntries.userEntries = function () {
-        return UserEntries.find();
-    }
-
-    Handlebars.registerHelper('getStatusColor', function (color) {
-        return color;
-    });
-
-    Template.phrases.Phrases = function () {
-        return Phrases.find();
-    };
-
-    Template.phraseInformationHeader.phraseInfo = function () {
-        return PhraseInformation.find();
-    };
-/*
-     Template.details.creatorName = function () {
-     var owner = this.userId
-     console.log(owner);
-     };
-     */
 }
