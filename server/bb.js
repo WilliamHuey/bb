@@ -74,7 +74,7 @@ Meteor.methods({
   },
   createPlayer: function(options) {
     options = options || {};
-    if(!(options.gameId === "number"))
+    if(!(options.gameId === "string" && options.gameId.length))
       throw new Meteor.Error(400, "Required parameter missing");
     
     var game = Games.findOne(options.gameId);
@@ -93,7 +93,26 @@ Meteor.methods({
     });
   },
   createGuess: function(options) {
-    ;
+    options = options || {};
+    if(!(options.text === "string" && options.text.length &&
+         options.playerId === "string" && options.playerId.length))
+      throw new Meteor.Error(400, "Required parameter missing");
+    var player = Players.findOne(options.playerId);
+    var game = Games.findOne(options.gameId);
+    if(!player)
+      throw new Meteor.Error(404, "No such player");
+    if(!game)
+      throw new Meteor.Error(404, "No such game");
+    if(!(game.status === "playing"))
+      throw new Meteor.Error(404, "Invalid game");
+      
+    return Guesses.insert({
+      text: options.text,
+      playerId: player._id,
+      gameId: game._id,
+      isGood: false,
+      createdAt: new Date()
+    });
   },
   createGame: function(options) {
     ;
