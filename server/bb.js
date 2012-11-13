@@ -73,7 +73,24 @@ Meteor.methods({
     });
   },
   createPlayer: function(options) {
-    ;
+    options = options || {};
+    if(!(options.gameId === "number"))
+      throw new Meteor.Error(400, "Required parameter missing");
+    
+    var game = Games.findOne(options.gameId);
+    
+    if(!game)
+      throw new Meteor.Error(404, "No such game");
+    
+    // generate a color for the player
+    var randColor = ("#" + Math.random().toString(16).slice(2, 8));
+    
+    Players.insert({
+      userId: this.userId,
+      gameId: game._id,
+      score: 0,
+      color: randColor
+    });
   },
   createGuess: function(options) {
     ;
