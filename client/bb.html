@@ -26,10 +26,13 @@
         <h1>Lobby</h1>
     {{loginButtons}}
         {{> createButton}}
+
     {{!> listOfGames}}
 
     {{/if}}
 </template>
+
+
 
 <template name="listOfGames">
   {{#each games}}
@@ -44,6 +47,9 @@
 <template name="createButton">
     <input id="createGameButton" type="submit" value="Create Game" accept=""/>
     <!--<input type="text" value="" class="">-->
+    {{#if newGameDialog}}
+    <p>Create game attempt</p>
+    {{/if}}
 </template>
 
 <template name="gamePlay">
