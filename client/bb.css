@@ -23,6 +23,9 @@ body, html{
 #login-box{
     float: right;
 }
+#createGameButton{
+    float:right;
+}
 #errorMessage{
 	float: right;
 }
