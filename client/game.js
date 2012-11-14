@@ -24,4 +24,10 @@ if (Meteor.isClient) {
     Template.listOfGames.games = function() {
         return Games.find({});
     };
+    Template.createButton.events({
+        'click #createGameButton': function(){
+            Meteor.call("createGame");
+            return false;
+        }
+    });
 }

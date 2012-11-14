@@ -115,7 +115,18 @@ Meteor.methods({
         });
     },
     createGame: function(options) {
-        option = options || {};
+        options = options || {};
+        console.log('button was clicked');
+        //console.log(options);
+        if(!(options.gameName === "string" && options.gameName.length < 1))
+            throw new Meteor.Error(400, "Required parameter missing");
+        var player = Players.findOne(options.playerId);
+        if(!player)
+            throw new Meteor.Error(404, "No such player");
+        if(!(lobby.status === "creating"))
+            throw new Meteor.Error(404, "Need to create a game first");
+        if(game.status === "playing")
+            throw new Meteor.Error(404, "Already in a game");
     }
 });
 
