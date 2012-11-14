@@ -53,11 +53,26 @@ Guesses.allow({
     }
 });
 
-// Makeshift validation library
-var Validate = {
-    maxMin: function(text) {
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+function mulStr (str, num) {
+    if (!num) return "";
+    var	orig = str,
+        soFar = [str],
+        added = 1,
+        left, i;
+    while (added < num) {
+        left = num - added;
+        str = orig;
+        for (i = 2; i < left; i *= 2) {
+            str += str;
+        }
+        soFar.push(str);
+        added += (i / 2);
     }
+    return soFar.join("");
 }
 
 Meteor.methods({
@@ -69,7 +84,8 @@ Meteor.methods({
 
         return Phrases.insert({
             text: options.text,
-            category: options.category
+            category: options.category,
+            randomIdx: getRandomInt(1, 500)
         });
     },
     createPlayer: function(options) {
@@ -114,8 +130,25 @@ Meteor.methods({
             createdAt: new Date()
         });
     },
+    getRandPhrase: function() {
+      var phrase = Phrases.findOne({randomIdx: getRandomInt(1, 500)});
+      while(!phrase)
+        phrase = Phrases.findOne({randomIdx: getRandomInt(1, 500)});
+      return phrase;
+    },
     createGame: function(options) {
-        //;
+      var today = new Date();
+      var phrase = this.getRandPhrase();
+      return Games.insert({
+        name: options.name || "Game " + today.toString(),
+        maxPlayers: 2,
+        jackpot: 0,
+        guessPhrase: multStr(' ', phrase.text.length),
+        status: 'waiting',
+        createdAt: today,
+        startedAt: null,
+        endedAt: null
+      });
     }
 });
 
