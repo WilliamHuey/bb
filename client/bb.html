@@ -26,7 +26,8 @@
         <h1>Lobby</h1>
     {{loginButtons}}
         {{> createButton}}
-    {{> listOfGames}}
+    {{!> listOfGames}}
+
     {{/if}}
 </template>
 
@@ -41,7 +42,8 @@
 </template>
 
 <template name="createButton">
-    <p id="createGameButton">A button goes here.</p>
+    <input id="createGameButton" type="submit" value="Create Game" accept=""/>
+    <!--<input type="text" value="" class="">-->
 </template>
 
 <template name="gamePlay">
