@@ -26,6 +26,21 @@ body, html{
 #createGameButton{
     float:right;
 }
+#newGameDialog{
+    background-color: yellow;
+    width: 30%;
+    border: solid 2px;
+    margin: auto;
+}
+#createGameNameForm{
+    width: 90%;
+}
+#createGameSubmit{
+    width: 45%;
+}
+#createGameCancel{
+    width: 45%;
+}
 #errorMessage{
 	float: right;
 }

@@ -21,8 +21,6 @@ if (Meteor.isClient) {
         return this.userId;
     }
 
-
-
     Template.listOfGames.games = function() {
         return Games.find({});
     };
@@ -31,12 +29,13 @@ if (Meteor.isClient) {
             //Meteor.call("createGame");
             Session.set("gameInitiationStatus", true);
             return false;
+        },
+        'click #createGameCancel': function(){
+            Session.set("gameInitiationStatus", false);
+            return false;
         }
     });
     Template.createButton.newGameDialog = function(){
-       //var gameInitiationStatus = false;
-        //console.log();
-        //return gameInitiationStatus;
         return Session.get("gameInitiationStatus");
     };
 }
