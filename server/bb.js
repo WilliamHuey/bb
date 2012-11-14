@@ -115,7 +115,7 @@ Meteor.methods({
         });
     },
     createGame: function(options) {
-        //;
+        option = options || {};
     }
 });
 
