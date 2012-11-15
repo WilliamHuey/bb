@@ -57,24 +57,6 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function mulStr (str, num) {
-    if (!num) return "";
-    var	orig = str,
-        soFar = [str],
-        added = 1,
-        left, i;
-    while (added < num) {
-        left = num - added;
-        str = orig;
-        for (i = 2; i < left; i *= 2) {
-            str += str;
-        }
-        soFar.push(str);
-        added += (i / 2);
-    }
-    return soFar.join("");
-}
-
 Meteor.methods({
     createPhrase: function(options) {
         options = options || {};
@@ -142,8 +124,10 @@ Meteor.methods({
       return Games.insert({
         name: options.name || "Game " + today.toString(),
         maxPlayers: 2,
+        phrase: phrase.text,
+        category: phrase.category,
         jackpot: 0,
-        guessPhrase: multStr(' ', phrase.text.length),
+        guessPhrase: new Array(phrase),
         status: 'waiting',
         createdAt: today,
         startedAt: null,
