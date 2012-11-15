@@ -7,8 +7,9 @@ body, html{
 	height: 100%;
 }
 #wrapper{
-	width: 100%;
+	width: 62.5em;
 	background-color: orange;
+    margin: auto;
 }
 #leftOuter{
 	width: 50%;

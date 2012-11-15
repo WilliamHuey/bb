@@ -26,23 +26,19 @@
         <h1>Lobby</h1>
     {{loginButtons}}
         {{> createButton}}
-    {{!> listOfGames}}
+    {{> listOfGames}}
     {{/if}}
 </template>
 
 <template name="listOfGames">
-  {{#each games}}
-    {{> game}}
+  {{#each Game}}
+    <p>{{name}}</p>
   {{/each}}
 </template>
 
-<template name="game">
-    {{gameName}}
-</template>
 
 <template name="createButton">
     <input id="createGameButton" type="submit" value="Create Game" accept=""/>
-    <!--<input type="text" value="" class="">-->
     {{#if newGameDialog}}
     <div id="newGameDialog">
         <p>Please enter a name for your game.</p>

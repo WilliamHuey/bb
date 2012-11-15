@@ -59,6 +59,7 @@ function getRandomInt(min, max) {
 
 Meteor.methods({
     createPhrase: function(options) {
+        console.log('in create phrase');
         options = options || {};
         if (!(typeof options.text === "string" && options.text.length &&
             typeof options.category === "string" && options.category.length))
@@ -112,15 +113,13 @@ Meteor.methods({
             createdAt: new Date()
         });
     },
-    getRandPhrase: function() {
-      var phrase = Phrases.findOne({randomIdx: getRandomInt(1, 500)});
-      while(!phrase)
-        phrase = Phrases.findOne({randomIdx: getRandomInt(1, 500)});
-      return phrase;
-    },
     createGame: function(options) {
-      var today = new Date();
-      var phrase = this.getRandPhrase();
+        Phrases.remove({});
+
+        Phrases.insert({text: "A phrase to remember", category: "A Category"});
+        var phrase = Phrases.findOne({text: "A phrase to remember", category: "A Category"});
+        var today = new Date();
+
       return Games.insert({
         ownerId: this.userId,
         name: options.name || "Game " + today.toString(),
@@ -134,6 +133,7 @@ Meteor.methods({
         startedAt: null,
         endedAt: null
       });
+
     }
 });
 
@@ -141,11 +141,10 @@ Meteor.methods({
 if (Meteor.isServer) {
     Meteor.startup(function () {
         Games.remove({});
-        Games.insert({gameName: "A name for a Game"});
+        Games.insert({name: "A name for a Game"});
     });
 
     Meteor.publish("games", function() {
         return Games.find({});
     });
-
 }
