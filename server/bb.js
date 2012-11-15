@@ -139,9 +139,11 @@ Meteor.methods({
 if (Meteor.isServer) {
     Games.remove({});
     //Games.insert({gameName: "A name for a Game"});
-
-    Meteor.publish("games", function() {
-        return Games.find({});
+    Meteor.startup(function(){
+        Meteor.publish("games", function() {
+            return Games.find({});
+        });
     });
+
 
 }
