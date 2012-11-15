@@ -122,6 +122,7 @@ Meteor.methods({
       var today = new Date();
       var phrase = this.getRandPhrase();
       return Games.insert({
+        ownerId: this.userId,
         name: options.name || "Game " + today.toString(),
         maxPlayers: 2,
         phrase: phrase.text,
