@@ -115,11 +115,27 @@ Meteor.methods({
     },
     createGame: function(options) {
         Phrases.remove({});
-
+        //Games.remove({});
         Phrases.insert({text: "A phrase to remember", category: "A Category"});
         var phrase = Phrases.findOne({text: "A phrase to remember", category: "A Category"});
         var today = new Date();
 
+        var gameStuff = {}
+
+        var anotherName = options.name || "Game " + today.toString();
+
+        var things = gameStuff;
+
+        //console.log(things);
+
+        //console.log(Games.find({}).fetch());
+
+
+        return  Games.insert({
+            name: anotherName
+        });
+
+        /*
       return Games.insert({
         name: options.name || "Game " + today.toString(),
         maxPlayers: 2,
@@ -132,6 +148,7 @@ Meteor.methods({
         startedAt: null,
         endedAt: null
       });
+        */
     }
 });
 

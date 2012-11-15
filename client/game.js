@@ -21,11 +21,21 @@ if (Meteor.isClient) {
         return this.userId;
     }
 
-    Template.listOfGames.games = function () {
+    Template.listOfGames.Game = function () {
         console.log(Games.find().fetch());
         //console.log('list of games');
         return Games.find();
     };
+/*
+    Handlebars.registerHelper('list', function(items, fn) {
+        var out = "<ul>";
+
+        for(var i=0, l=items.length; i<l; i++) {
+            out = out + "<li>" + fn(items[i]) + "</li>";
+        }
+        return out + "</ul>";
+    });
+*/
     Template.createButton.events({
         //button to activate the create game dialog
         'click #createGameButton': function () {

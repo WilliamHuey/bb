@@ -31,13 +31,13 @@
 </template>
 
 <template name="listOfGames">
-  {{#games}}
+  {{#each Game}}
     {{name}}
-  {{/games}}
+  {{/each}}
 </template>
 
 <template name="game">
-    {{name}}
+    {{anotherName}}
 </template>
 
 <template name="createButton">
