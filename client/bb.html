@@ -26,18 +26,18 @@
         <h1>Lobby</h1>
     {{loginButtons}}
         {{> createButton}}
-    {{!> listOfGames}}
+    {{> listOfGames}}
     {{/if}}
 </template>
 
 <template name="listOfGames">
-  {{#each games}}
-    {{> game}}
-  {{/each}}
+  {{#games}}
+    {{name}}
+  {{/games}}
 </template>
 
 <template name="game">
-    {{gameName}}
+    {{name}}
 </template>
 
 <template name="createButton">
