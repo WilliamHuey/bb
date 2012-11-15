@@ -32,17 +32,13 @@
 
 <template name="listOfGames">
   {{#each Game}}
-    {{name}}
+    <p>{{name}}</p>
   {{/each}}
 </template>
 
-<template name="game">
-    {{anotherName}}
-</template>
 
 <template name="createButton">
     <input id="createGameButton" type="submit" value="Create Game" accept=""/>
-    <!--<input type="text" value="" class="">-->
     {{#if newGameDialog}}
     <div id="newGameDialog">
         <p>Please enter a name for your game.</p>
