@@ -21,25 +21,20 @@ if (Meteor.isClient) {
     Template.main.showFrontPage = function(){
         return !Meteor.userId();
     };
-
     //user is now a player because the user has an id
     Template.main.showLobby = function(){
-        return Meteor.userId();
+        var game = Games.find({ownerId: Meteor.userId()});
+        //check to make sure player is not in a game and status is undefined
+        //once a game of a player is undefined, the player can not be in any game state
+        if(game.count() === 0 && typeof game.fetch()[0] === "undefined")
+            //return Meteor.userId();
+            return true;
     };
-    //game is valid because there is a user id associated to game
-    Template.main.showGame = function(){
-        if(Games.find({ownerId: Meteor.userId()}).count() > 0)
-            return true
-    }
-    Template.game.Games = function(){
-        return Games.find();
-    }
-
+    //the list of games in the lobby
     Template.listOfGames.Game = function () {
         return Games.find();
     };
-
-
+    //events for the create new game dialog
     Template.createButton.events({
         //button to activate the create game dialog
         'click #createGameButton': function () {
@@ -57,7 +52,6 @@ if (Meteor.isClient) {
             Meteor.call("createGame",{
                 name: name
             });
-            console.log('create game attempt');
             return false;
         }
     });
@@ -65,4 +59,16 @@ if (Meteor.isClient) {
     Template.createButton.newGameDialog = function(){
         return Session.get("gameInitiationStatus");
     };
+    //game is valid because there is a user id associated to a game
+    //game must in defined state of waiting, playing or finished
+    Template.main.showGame = function(){
+        var game = Games.find({ownerId: Meteor.userId()});
+        if(game.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing"))
+            return true
+    }
+    //the game-play template
+    Template.game.Games = function(){
+        return Games.find();
+    }
+
 }

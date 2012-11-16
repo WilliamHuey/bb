@@ -51,9 +51,11 @@
 </template>
 
 <template name="game">
+    <p>In the Game as:</p>
     {{#each Games}}
         {{ownerId}}
     {{/each}}
+    {{> userInput}}
 </template>
 
 <template name="gamePlay">
