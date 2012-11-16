@@ -20,14 +20,29 @@ if (Meteor.isClient) {
     function getUserId() {
         return this.userId;
     }
-    Template.showFrontPage.showFrontPage = function(){
-        if(!getUserId())
-            return Session.set("showFrontPage", true);
+
+    //user does not have an id and will be shown the front page
+    Template.main.showFrontPage = function(){
+        console.log(Meteor.users.findOne({_id: this.userId}));
+        console.log(Meteor.users.findOne());
+        console.log('front show ' + this.userId);
+        if(typeof getUserId() === "undefined")
+            Session.set("showFrontPage", true);
+        return Session.get("showFrontPage");
+    };
+
+    //user is now a player because the user has an id
+    //front page variable is no longer true
+    Template.main.showLobby = function(){
+        console.log(Meteor.users.findOne({_id: this.userId}));
+        console.log(Meteor.users.findOne());
+        console.log('lobby show ' + this.userId);
+        if(typeof getUserId() !== "undefined")
+            Session.set("showLobby", true);
+        return Session.get("showLobby");
     };
 
     Template.listOfGames.Game = function () {
-        console.log(Games.find().fetch());
-        //console.log('list of games');
         return Games.find();
     };
 

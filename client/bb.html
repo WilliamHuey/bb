@@ -9,25 +9,25 @@
 </body>
 
 <template name="main">
-    {{#if currentUser}}
-        {{> lobby}}
-    {{else}}
-        {{> showFrontPage}}
+    {{#if showFrontPage}}
+        {{>frontPage}}
     {{/if}}
+     {{#if showLobby}}
+        {{>lobby}}
+    {{/if}}
+
 </template>
 
-<template name="showFrontPage">
-    <p>Please login or create an account to play.</p>
-    {{loginButtons}}
+<template name="frontPage">
+     <p>Please login or create an account to play.</p>
+     {{loginButtons}}
 </template>
 
 <template name="lobby">
-    {{#if currentUser}}
-        <h1>Lobby</h1>
+    <h1>Lobby</h1>
     {{loginButtons}}
-        {{> createButton}}
+    {{> createButton}}
     {{> listOfGames}}
-    {{/if}}
 </template>
 
 <template name="listOfGames">
@@ -35,7 +35,6 @@
     <p>{{name}}</p>
   {{/each}}
 </template>
-
 
 <template name="createButton">
     <input id="createGameButton" type="submit" value="Create Game" accept=""/>
