@@ -54,10 +54,14 @@
 </template>
 
 <template name="game">
-    <p>In the Game as:</p>
+    <p>Game Room</p>
     {{#each Games}}
-        {{ownerId}}
+    <p>GameID {{_id}}</p>
+    <br>
+    <p>Person(s) in the game:</p>
+        {{ownerId}} <br>
     {{/each}}
+    <br>
     {{> userInput}}
 </template>
 

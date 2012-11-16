@@ -74,7 +74,7 @@ if (Meteor.isClient) {
     }
     //the game-play template
     Template.game.Games = function(){
-        return Games.find();
+        return Games.find({ownerId: Meteor.userId()});
     }
 
 }
