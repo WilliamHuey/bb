@@ -114,8 +114,10 @@ Meteor.methods({
         });
     },
     createGame: function(options) {
-        Phrases.remove({});
+        if(Games.find({ownerId: this.userId}).count() > 0)
+            throw new Meteor.Error(400, "Already a game");
 
+        Phrases.remove({});
         Phrases.insert({text: "A phrase to remember", category: "A Category"});
         var phrase = Phrases.findOne({text: "A phrase to remember", category: "A Category"});
         var today = new Date();
@@ -141,7 +143,6 @@ Meteor.methods({
 if (Meteor.isServer) {
     Meteor.startup(function () {
         Games.remove({});
-        Games.insert({name: "A name for a Game"});
     });
 
     Meteor.publish("games", function() {
