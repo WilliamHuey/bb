@@ -36,7 +36,8 @@
 
 <template name="listOfGames">
   {{#each Game}}
-    <p>{{name}}</p>
+    <p class="nameOfGame">{{name}}</p>
+    <input id="joinGameButton" type="submit" value="Join Game" />
   {{/each}}
 </template>
 
