@@ -31,7 +31,7 @@ if (Meteor.isClient) {
         var game = Games.find({ownerId: Meteor.userId()});
         //check to make sure player is not in a game and status is undefined
         //once a game of a player is undefined, the player can not be in any game state
-        if(game.count() === 0 && typeof game.fetch()[0] === "undefined")
+        if(Meteor.userId() && game.count() === 0 && typeof game.fetch()[0] === "undefined")
             //return Meteor.userId();
             return Meteor.userId();
     };
@@ -68,7 +68,7 @@ if (Meteor.isClient) {
     //game must in defined state of waiting, playing or finished
     Template.main.showGame = function(){
         var game = Games.find({ownerId: Meteor.userId()});
-        if(game.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing"))
+        if(Meteor.userId() && game.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing"))
             return true
     }
     //the game-play template
