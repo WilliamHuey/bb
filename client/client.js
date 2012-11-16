@@ -8,7 +8,8 @@ if (Meteor.isClient) {
     Meteor.subscribe('players', function () {
     });
 
-    Meteor.subscribe('games', function () {
+    Meteor.subscribe('games', function onComplete() {
+        return Session.set("gamesLoaded", true)
     });
 
     Meteor.subscribe('phrases', function () {
@@ -16,6 +17,10 @@ if (Meteor.isClient) {
 
     Meteor.subscribe('guesses', function () {
     });
+
+    Template.main.gamesLoaded = function(){
+        return Session.get("gamesLoaded");
+    }
 
     //user does not have an id and will be shown the front page
     Template.main.showFrontPage = function(){
@@ -28,7 +33,7 @@ if (Meteor.isClient) {
         //once a game of a player is undefined, the player can not be in any game state
         if(game.count() === 0 && typeof game.fetch()[0] === "undefined")
             //return Meteor.userId();
-            return true;
+            return Meteor.userId();
     };
     //the list of games in the lobby
     Template.listOfGames.Game = function () {

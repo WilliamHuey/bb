@@ -9,11 +9,13 @@
 </body>
 
 <template name="main">
-    {{#if showFrontPage}}
-        {{>frontPage}}
-    {{/if}}
-     {{#if showLobby}}
-        {{>lobby}}
+    {{#if gamesLoaded}}
+        {{#if showFrontPage}}
+            {{>frontPage}}
+        {{/if}}
+         {{#if showLobby}}
+            {{>lobby}}
+        {{/if}}
     {{/if}}
     {{#if showGame}}
         {{>game}}
