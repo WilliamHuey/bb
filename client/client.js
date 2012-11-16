@@ -17,34 +17,28 @@ if (Meteor.isClient) {
     Meteor.subscribe('guesses', function () {
     });
 
-    function getUserId() {
-        return this.userId;
-    }
-
     //user does not have an id and will be shown the front page
     Template.main.showFrontPage = function(){
-        console.log(Meteor.users.findOne({_id: this.userId}));
-        console.log(Meteor.users.findOne());
-        console.log('front show ' + this.userId);
-        if(typeof getUserId() === "undefined")
-            Session.set("showFrontPage", true);
-        return Session.get("showFrontPage");
+        return !Meteor.userId();
     };
 
     //user is now a player because the user has an id
-    //front page variable is no longer true
     Template.main.showLobby = function(){
-        console.log(Meteor.users.findOne({_id: this.userId}));
-        console.log(Meteor.users.findOne());
-        console.log('lobby show ' + this.userId);
-        if(typeof getUserId() !== "undefined")
-            Session.set("showLobby", true);
-        return Session.get("showLobby");
+        return Meteor.userId();
     };
+    //game is valid because there is a user id associated to game
+    Template.main.showGame = function(){
+        if(Games.find({ownerId: Meteor.userId()}).count() > 0)
+            return true
+    }
+    Template.game.Games = function(){
+        return Games.find();
+    }
 
     Template.listOfGames.Game = function () {
         return Games.find();
     };
+
 
     Template.createButton.events({
         //button to activate the create game dialog

@@ -15,7 +15,9 @@
      {{#if showLobby}}
         {{>lobby}}
     {{/if}}
-
+    {{#if showGame}}
+        {{>game}}
+    {{/if}}
 </template>
 
 <template name="frontPage">
@@ -48,6 +50,12 @@
     {{/if}}
 </template>
 
+<template name="game">
+    {{#each Games}}
+        {{ownerId}}
+    {{/each}}
+</template>
+
 <template name="gamePlay">
     {{#if currentUser}}
         <div id="leftOuter">
@@ -64,7 +72,6 @@
 
 <template name="userInput">
     <div id="login-box">{{loginButtons}}</div>
-        <p>Currently Logged in</p>
         <p>Hey, enter some text here.</p>
         <input type="text" id="inputofuser" name="inputofuser">
         <p class="errorMessageHidden">Please enter only letters.<p>
