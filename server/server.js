@@ -135,10 +135,8 @@ Meteor.methods({
         startedAt: null,
         endedAt: null
       });
-
     }
 });
-
 
 if (Meteor.isServer) {
     Meteor.startup(function () {

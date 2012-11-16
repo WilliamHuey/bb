@@ -3,22 +3,22 @@
 </head>
 
 <body>
-  <div id="wrapper">
-    {{>negotiate}}
+  <div id="master">
+    {{>main}}
   </div>
 </body>
 
-<template name="negotiate">
-    {{> loggedOut}}
-    {{> lobby}}
+<template name="main">
+    {{#if currentUser}}
+        {{> lobby}}
+    {{else}}
+        {{> showFrontPage}}
+    {{/if}}
 </template>
 
-<template name="loggedOut">
-    {{#if currentUser}}
-    {{else}}
-        <p>Please login or create an account to play.</p>
+<template name="showFrontPage">
+    <p>Please login or create an account to play.</p>
     {{loginButtons}}
-    {{/if}}
 </template>
 
 <template name="lobby">
