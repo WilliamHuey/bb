@@ -1,8 +1,3 @@
-Players = new Meteor.Collection("players");
-Phrases = new Meteor.Collection("phrases");
-Games   = new Meteor.Collection("games");
-Guesses = new Meteor.Collection("guesses");
-
 if (Meteor.isClient) {
 
     Meteor.subscribe('players', function () {
