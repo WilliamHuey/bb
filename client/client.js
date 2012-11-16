@@ -23,23 +23,13 @@ if (Meteor.isClient) {
 
     //user does not have an id and will be shown the front page
     Template.main.showFrontPage = function(){
-        console.log(Meteor.users.findOne({_id: this.userId}));
-        console.log(Meteor.users.findOne());
-        console.log('front show ' + this.userId);
-        if(typeof getUserId() === "undefined")
-            Session.set("showFrontPage", true);
-        return Session.get("showFrontPage");
+        return !Meteor.userId();
     };
 
     //user is now a player because the user has an id
     //front page variable is no longer true
     Template.main.showLobby = function(){
-        console.log(Meteor.users.findOne({_id: this.userId}));
-        console.log(Meteor.users.findOne());
-        console.log('lobby show ' + this.userId);
-        if(typeof getUserId() !== "undefined")
-            Session.set("showLobby", true);
-        return Session.get("showLobby");
+        return Meteor.userId();
     };
 
     Template.listOfGames.Game = function () {
