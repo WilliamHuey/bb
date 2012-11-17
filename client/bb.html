@@ -29,6 +29,9 @@
 
 <template name="lobby">
     <h1>Lobby</h1>
+    <br>
+    <p>user id is</p>{{userId}}
+    <br>
     {{loginButtons}}
     {{> createButton}}
     {{> listOfGames}}
@@ -66,10 +69,14 @@
     {{> userInput}}
 </template>
 
+
+
 <template name="gamePlayers">
-    {{#each Players}}
-        {{userId}}
-    {{/each}}
+    {{#if playersLoaded}}
+        {{#each Players}}
+            {{userId}}
+        {{/each}}
+    {{/if}}
 </template>
 
 <template name="gamePlay">

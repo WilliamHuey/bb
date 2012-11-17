@@ -6,6 +6,7 @@ Guesses = new Meteor.Collection("guesses");
 if (Meteor.isClient) {
 
     Meteor.subscribe('players', function () {
+        return Session.set("playersLoaded", true)
     });
 
     Meteor.subscribe('games', function onComplete() {
@@ -20,6 +21,9 @@ if (Meteor.isClient) {
 
     Template.main.gamesLoaded = function(){
         return Session.get("gamesLoaded");
+    }
+    Template.gamePlayers.playersLoaded = function(){
+        return Session.get("playersLoaded");
     }
 
     //user does not have an id and will be shown the front page
@@ -36,6 +40,9 @@ if (Meteor.isClient) {
             //return Meteor.userId();
             return Meteor.userId();
     };
+    Template.lobby.userId = function(){
+        return Meteor.userId();
+    }
     //the list of games in the lobby
     Template.listOfGames.Game = function () {
         return Games.find();
@@ -53,7 +60,11 @@ if (Meteor.isClient) {
         console.log(Players.find().fetch());
         return Players.find();
     };
-    //events for the create new game dialog
+
+
+
+
+        //events for the create new game dialog
     Template.createButton.events({
         //button to activate the create game dialog
         'click #createGameButton': function () {
@@ -79,7 +90,7 @@ if (Meteor.isClient) {
         return Session.get("gameInitiationStatus");
     };
     //game is valid because there is a user id associated to a game
-    //game must in defined state of waiting, playing or finished
+    //game must be in defined state of waiting, playing or finished
     Template.main.showGame = function(){
         var game = Games.find({ownerId: Meteor.userId()});
         if(Meteor.userId() && game.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing"))

@@ -149,7 +149,7 @@ Meteor.methods({
     },
     joinGame: function(options){
         //joining game cases
-        var player = Players.findOne(options.playerId);
+        //var player = Players.findOne(options.playerId);
         var gameId = Games.findOne(options.gameId);
 
         console.log('attempt joingame');
@@ -160,8 +160,10 @@ Meteor.methods({
             throw new Meteor.Error(400, "Not a valid user")
         }
 
+        console.log('clicking status of players');
+        console.log(Players.find({userId: Meteor.userId()}).fetch());
         //user is already a player in another game
-        if (Players.find({userId: player}).count() === 1){
+        if (Players.find({userId: Meteor.userId()}).count() === 1){
             console.log('already in game');
             throw new Meteor.Error(404, "Already playing another game.");
         }
