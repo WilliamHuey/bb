@@ -62,7 +62,14 @@
         {{ownerId}} <br>
     {{/each}}
     <br>
+    {{!players}}
     {{> userInput}}
+</template>
+
+<template name="gamePlayers">
+    {{#each Games}}
+        {{players}}
+    {{/each}}
 </template>
 
 <template name="gamePlay">

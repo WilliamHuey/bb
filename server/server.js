@@ -114,28 +114,49 @@ Meteor.methods({
         });
     },
     createGame: function(options) {
-        if(Games.find({ownerId: this.userId}).count() > 0)
+        if(Games.find({ownerId: this.userId}).count() > 0){
             throw new Meteor.Error(400, "Already a game");
+        } else {
+            Phrases.remove({});
+            Phrases.insert({text: "A phrase to remember", category: "A Category"});
+            var phrase = Phrases.findOne({text: "A phrase to remember", category: "A Category"});
+            var today = new Date();
 
-        Phrases.remove({});
-        Phrases.insert({text: "A phrase to remember", category: "A Category"});
-        var phrase = Phrases.findOne({text: "A phrase to remember", category: "A Category"});
-        var today = new Date();
+            return Games.insert({
+                ownerId: this.userId,
+                name: options.name || "Game " + today.toString(),
+                maxPlayers: 2,
+                phrase: phrase.text,
+                category: phrase.category,
+                jackpot: 0,
+                guessPhrase: new Array(phrase),
+                status: 'waiting',
+                createdAt: today,
+                startedAt: null,
+                endedAt: null,
+                players: []
+            });
+        }
+    },
+    joinGame: function(options){
+        //joining game cases
+        var player = Players.findOne(options.playerId);
+        var gameId = Games.findOne(options.gameId);
 
-      return Games.insert({
-        ownerId: this.userId,
-        name: options.name || "Game " + today.toString(),
-        maxPlayers: 2,
-        phrase: phrase.text,
-        category: phrase.category,
-        jackpot: 0,
-        guessPhrase: new Array(phrase),
-        status: 'waiting',
-        createdAt: today,
-        startedAt: null,
-        endedAt: null,
-        players: []
-      });
+        //must be valid user
+        if(!Meteor.userId())
+            throw new Meteor.Error(400, "Not a valid user")
+        //user is already a player in another game
+        if (Players.find({userId: player}).count() === 1)
+            throw new Meteor.Error(404, "Already playing another game.");
+        //player cannot join an invalid game
+        if (!gameId)
+            throw new Meteor.Error(404, "No such game");
+        //player can not join if game already has max permitted players in room
+        if(Players.find({gameId: gameId}).count() === Games.findOne(options.maxPlayers))
+            throw new Meteor.Error(400, "Game is full");
+    
+
     }
 });
 

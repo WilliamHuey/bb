@@ -46,9 +46,14 @@ if (Meteor.isClient) {
             //var ownerId = Games.find({_id: event.target.id}).fetch()[0].ownerId;
             //console.log();
             var chosenGame = Games.find({_id: event.target.id}).fetch()[0];
-            var playersArray = chosenGame.players;
-            playersArray.push(Meteor.userId());
-            console.log(chosenGame);
+            //var playersArray = chosenGame.players;
+            //playersArray.push(Meteor.userId());
+            //var gameOwner = chosenGame.ownerId;
+
+            //Games.update({ ownerId: gameOwner  },{ $pushAll : { players : playersArray } })
+
+            ////console.log(Games.find({_id: event.target.id}).fetch());
+
             //chosenGame.insert({players: Meteor.userId()});
             //console.log(Games.find({players: Meteor.userId()}).fetch());
         }
@@ -88,6 +93,7 @@ if (Meteor.isClient) {
     }
     //the game-play template
     Template.game.Games = function(){
+        console.log(Games.find({ownerId: Meteor.userId()}));
         return Games.find({ownerId: Meteor.userId()});
     }
 
