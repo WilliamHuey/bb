@@ -42,23 +42,17 @@ if (Meteor.isClient) {
     };
     Template.listOfGames.events({
         'click .joinGameButton': function(event){
-            //console.log();
-            //var ownerId = Games.find({_id: event.target.id}).fetch()[0].ownerId;
-            //console.log();
-            var chosenGame = Games.find({_id: event.target.id}).fetch()[0];
-            //var playersArray = chosenGame.players;
-            //playersArray.push(Meteor.userId());
-            //var gameOwner = chosenGame.ownerId;
-
-            //Games.update({ ownerId: gameOwner  },{ $pushAll : { players : playersArray } })
-
-            ////console.log(Games.find({_id: event.target.id}).fetch());
-
-            //chosenGame.insert({players: Meteor.userId()});
-            //console.log(Games.find({players: Meteor.userId()}).fetch());
+            var joiningGameId = Games.find({_id: event.target.id}).fetch()[0]._id;
+            console.log(joiningGameId);
+            Meteor.call("joinGame",{gameId: joiningGameId});
+            return false;
         }
     });
-
+    Template.gamePlayers.Players = function() {
+        console.log('the players');
+        console.log(Players.find().fetch());
+        return Players.find();
+    };
     //events for the create new game dialog
     Template.createButton.events({
         //button to activate the create game dialog

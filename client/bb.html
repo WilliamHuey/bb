@@ -62,13 +62,13 @@
         {{ownerId}} <br>
     {{/each}}
     <br>
-    {{!players}}
+    {{> gamePlayers}}
     {{> userInput}}
 </template>
 
 <template name="gamePlayers">
-    {{#each Games}}
-        {{players}}
+    {{#each Players}}
+        {{userId}}
     {{/each}}
 </template>
 

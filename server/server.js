@@ -72,24 +72,33 @@ Meteor.methods({
         });
     },
     createPlayer: function(options) {
+        console.log('first player generation');
         options = options || {};
-        if (!(options.gameId === "string" && options.gameId.length))
+
+        console.log(typeof options.gameId === "string");
+        console.log(options.gameId.length > 0);
+
+        if (!(typeof options.gameId === "string" && options.gameId.length > 0))
             throw new Meteor.Error(400, "Required parameter missing");
 
+        console.log('second player generation');
         var game = Games.findOne(options.gameId);
 
         if (!game)
             throw new Meteor.Error(404, "No such game");
 
+        console.log('third player generation');
         // generate a color for the player
         var randColor = ("#" + Math.random().toString(16).slice(2, 8));
 
+        console.log('player generation');
         Players.insert({
             userId: this.userId,
             gameId: game._id,
             score: 0,
             color: randColor
         });
+        console.log(Players.find().fetch());
     },
     createGuess: function(options) {
         options = options || {};
@@ -143,26 +152,49 @@ Meteor.methods({
         var player = Players.findOne(options.playerId);
         var gameId = Games.findOne(options.gameId);
 
-        //must be valid user
-        if(!Meteor.userId())
-            throw new Meteor.Error(400, "Not a valid user")
-        //user is already a player in another game
-        if (Players.find({userId: player}).count() === 1)
-            throw new Meteor.Error(404, "Already playing another game.");
-        //player cannot join an invalid game
-        if (!gameId)
-            throw new Meteor.Error(404, "No such game");
-        //player can not join if game already has max permitted players in room
-        if(Players.find({gameId: gameId}).count() === Games.findOne(options.maxPlayers))
-            throw new Meteor.Error(400, "Game is full");
-    
+        console.log('attempt joingame');
 
+        //must be valid user
+        if(!Meteor.userId()){
+            console.log('not valid');
+            throw new Meteor.Error(400, "Not a valid user")
+        }
+
+        //user is already a player in another game
+        if (Players.find({userId: player}).count() === 1){
+            console.log('already in game');
+            throw new Meteor.Error(404, "Already playing another game.");
+        }
+
+        //player cannot join an invalid game
+        if (!gameId){
+            console.log('no such game');
+            throw new Meteor.Error(404, "No such game");
+        }
+
+        //player can not join if game already has max permitted players in room
+        if(Players.find({gameId: gameId}).count() === Games.findOne(options.maxPlayers)){
+            console.log('game is full');
+            throw new Meteor.Error(400, "Game is full");
+        }
+
+        console.log('almost');
+        Meteor.call("createPlayer", options);
+
+        //return Players.find();
+        //console.log(Players.find().fetch());
+        /*
+        return Player.inser({
+
+        });
+        */
     }
 });
 
 if (Meteor.isServer) {
     Meteor.startup(function () {
         Games.remove({});
+        Players.remove({});
     });
 
     Meteor.publish("games", function() {
