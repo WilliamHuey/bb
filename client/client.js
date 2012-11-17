@@ -40,6 +40,20 @@ if (Meteor.isClient) {
     Template.listOfGames.Game = function () {
         return Games.find();
     };
+    Template.listOfGames.events({
+        'click .joinGameButton': function(event){
+            //console.log();
+            //var ownerId = Games.find({_id: event.target.id}).fetch()[0].ownerId;
+            //console.log();
+            var chosenGame = Games.find({_id: event.target.id}).fetch()[0];
+            var playersArray = chosenGame.players;
+            playersArray.push(Meteor.userId());
+            console.log(chosenGame);
+            //chosenGame.insert({players: Meteor.userId()});
+            //console.log(Games.find({players: Meteor.userId()}).fetch());
+        }
+    });
+
     //events for the create new game dialog
     Template.createButton.events({
         //button to activate the create game dialog

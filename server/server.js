@@ -133,7 +133,8 @@ Meteor.methods({
         status: 'waiting',
         createdAt: today,
         startedAt: null,
-        endedAt: null
+        endedAt: null,
+        players: []
       });
     }
 });

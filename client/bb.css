@@ -42,13 +42,12 @@ body, html{
 #createGameCancel{
     width: 45%;
 }
-#joinGameButton{
+.joinGameButton{
     float: left;
 }
 .nameOfGame{
     float: left;
 }
-
 #errorMessage{
 	float: right;
 }
