@@ -54,6 +54,24 @@ body, html{
 	background-color: #F5F5DC;
     margin: auto;
 }
+input {
+    height: 1.8em;
+    border: 1px solid #ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius:3px;
+    -o-border-radius:3px;
+    border-radius:3px;
+}
+input:focus {
+    border: 1px solid #fa903a;
+    transition: all 0.15s ease-in-out;
+    -webkit-transition: all 0.15s ease-in-out;
+    -moz-transition: all 0.15s ease-in-out;
+    -moz-box-shadow: 0 0 7px #fcc292;
+    -webkit-box-shadow: 0 0 7px #fcc292;
+    -o-box-shadow: 0 0 7px #fcc292;
+    box-shadow: 0 0 7px #fcc292;
+}
 #login-box{
     float: right;
 }
@@ -68,7 +86,7 @@ body, html{
 #frontPageNotice{
     font-size: 1.3em;
     margin: auto;
-    padding: 0.9em 0em 0.8em;
+    padding: 0.9em 0em 1.4em;
     width: 50%;
     text-align: center;
 }
@@ -76,7 +94,7 @@ body, html{
     width: 100%;
 }
 #login-email-label-and-input, #login-password-label-and-input {
-    padding-bottom: 0.45em;
+    padding-bottom: 0.9em;
     width: 100%;
 }
 #login-email-label, #login-password-label {
