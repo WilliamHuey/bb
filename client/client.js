@@ -4,7 +4,6 @@ Games = new Meteor.Collection("games");
 Guesses = new Meteor.Collection("guesses");
 
 if (Meteor.isClient) {
-
     Meteor.subscribe('players', function () {
         return Session.set("playersLoaded", true)
     });
@@ -19,96 +18,64 @@ if (Meteor.isClient) {
     Meteor.subscribe('guesses', function () {
     });
 
+    //indicate that the games collection has loaded for the first time
     Template.main.gamesLoaded = function () {
         return Session.get("gamesLoaded");
     }
+
+    //indicate that the players collection has loaded for the first time
     Template.main.playerLoaded = function () {
         return Session.get("playersLoaded");
     }
-
-    Session.set("showLobby", false);
-
 
     //user does not have an id and will be shown the front page
     Template.main.showFrontPage = function () {
         return !Meteor.userId();
     };
-    //user is now a player because the user has an id
-    Template.main.showLobby = function () {
 
+    //user is still a user until the person is a player
+    Template.main.showLobby = function () {
         var player = Players.find({userId:Meteor.userId()});
         var game = Games.find({ownerId:Meteor.userId()});
-        //check to see if player is not a owner of a game and status is undefined
-        //once a game of a player is undefined, the player can not be in any game state
-
-        if (Meteor.userId() && game.count() === 0 && player.count() === 0 && typeof game.fetch()[0] === "undefined"){
-            console.log('in the lobby');
+        //user cannot be player when there is no game associated with the user
+        if (Meteor.userId() && game.count() === 0 && player.count() === 0 && typeof game.fetch()[0] === "undefined")
             return Meteor.userId();
-        }
-
-        if (Meteor.userId() && player.count() === 0){
-            console.log('user is in lobby');
+        //user is in the lobby because that person is not a player
+        if (Meteor.userId() && player.count() === 0)
             return Meteor.userId();
-        }
-
-
-
-        console.log('in lobby');
-        console.log(Session.get("showLobby"));
-
-        if (Session.get('showLobby'))
-            console.log(Session.get('showLobby'));
     };
+
     Template.lobby.userId = function () {
         return Meteor.userId();
     }
+
     //the list of games in the lobby
     Template.listOfGames.Game = function () {
         return Games.find();
     };
+
+    //after clicking on button the showGame is set to true
     Template.listOfGames.events({
         'click .joinGameButton':function (event) {
             var joiningGameId = Games.find({_id:event.target.id}).fetch()[0]._id;
-            Meteor.call("joinGame", {gameId:joiningGameId},function(err, data) {
+            Meteor.call("joinGame", {gameId:joiningGameId}, function (err, data) {
                 if (err)
                     console.log(err);
-
-                if(data){
-                    console.log('setting things');
+                if (data) {
                     Session.set("showGame", true);
                     Session.set("showLobby", false);
-
-
-                    console.log('show game is');
-                    console.log(Session.get("showGame"));
-
-                    console.log('show lobby is');
-                    console.log(Session.get("showLobby"));
-
-                    console.log('playersloaded');
-                    console.log(Session.get("playersLoaded"));
-
-                    console.log('gamesloaded');
-                    Session.set("gamesLoaded", true);
-                    console.log(Session.get("gamesLoaded"));
                 }
-
-                console.log(data);
-                //Session.set('q', data);
             });
             return false;
         }
     });
-    Template.gamePlayers.Players = function () {
-        return Players.find();
-    };
 
+    //determine if players collection is loaded in the game
     Template.main.playersLoaded = function () {
         if (Players.find().count() > 0) {
             return Meteor.userId();
         }
     };
-
 
     //events for the create new game dialog
     Template.createButton.events({
@@ -131,42 +98,33 @@ if (Meteor.isClient) {
             return false;
         }
     });
+
     //status to the create game dialog
     Template.createButton.newGameDialog = function () {
         return Session.get("gameInitiationStatus");
     };
+
     //game is valid because there is a user id associated to a game
     //game must be in defined state of waiting, playing or finished
     Template.main.showGame = function () {
-
         var player = Players.find({userId:Meteor.userId()});
-        //console.log('in game ' + Session.get("playersLoaded"));
-        //console.log();
-
-
-
         var game = Games.find({ownerId:Meteor.userId()});
-
-
-        if (Meteor.userId() && game.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing")){
-            console.log('really in a game');
+        //owner of game is in the game
+        if (Meteor.userId() && game.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing"))
             return Meteor.userId();
-        }
-
-        console.log('in show game');
-        console.log(player.count());
-
-        if (Meteor.userId() && player.count() === 1){
-            console.log('really in a game2');
+        //player has join a game
+        if (Meteor.userId() && player.count() === 1)
             return Meteor.userId();
-        }
+    };
 
-
-    }
     //the game-play template
     Template.game.Games = function () {
-        console.log(Games.find({ownerId:Meteor.userId()}));
         return Games.find({ownerId:Meteor.userId()});
-    }
+    };
+    
+    //display the players in a game
+    Template.gamePlayers.Players = function () {
+        return Players.find();
+    };
 
 }
