@@ -93,12 +93,13 @@ Meteor.methods({
 
         console.log('player generation');
         Players.insert({
-            userId: this.userId,
+            userId: Meteor.userId(),
             gameId: game._id,
             score: 0,
             color: randColor
         });
         console.log(Players.find().fetch());
+        return Players.find();
     },
     createGuess: function(options) {
         options = options || {};
@@ -160,8 +161,8 @@ Meteor.methods({
             throw new Meteor.Error(400, "Not a valid user")
         }
 
-        console.log('clicking status of players');
-        console.log(Players.find({userId: Meteor.userId()}).fetch());
+        //console.log('clicking status of players');
+        //console.log(Players.find({userId: Meteor.userId()}).fetch());
         //user is already a player in another game
         if (Players.find({userId: Meteor.userId()}).count() === 1){
             console.log('already in game');
@@ -201,5 +202,8 @@ if (Meteor.isServer) {
 
     Meteor.publish("games", function() {
         return Games.find({});
+    });
+    Meteor.publish("players", function() {
+        return Players.find({});
     });
 }

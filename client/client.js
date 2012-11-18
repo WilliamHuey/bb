@@ -6,7 +6,7 @@ Guesses = new Meteor.Collection("guesses");
 if (Meteor.isClient) {
 
     Meteor.subscribe('players', function () {
-        return Session.set("playersLoaded", true)
+
     });
 
     Meteor.subscribe('games', function onComplete() {
@@ -22,9 +22,7 @@ if (Meteor.isClient) {
     Template.main.gamesLoaded = function(){
         return Session.get("gamesLoaded");
     }
-    Template.gamePlayers.playersLoaded = function(){
-        return Session.get("playersLoaded");
-    }
+
 
     //user does not have an id and will be shown the front page
     Template.main.showFrontPage = function(){
