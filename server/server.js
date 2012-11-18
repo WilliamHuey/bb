@@ -92,7 +92,8 @@ Meteor.methods({
             color:randColor
         });
 
-        return Players.find();
+        //console.log('player creation process');
+        return Players.find().fetch();
     },
     createGuess:function (options) {
 
@@ -152,6 +153,7 @@ Meteor.methods({
         gameInfo.gameId = Games.find({ownerId:Meteor.userId()}).fetch()[0]._id;
 
         Meteor.call("createPlayer", gameInfo);
+        //return true;
     },
     joinGame:function (options) {
 
@@ -173,9 +175,21 @@ Meteor.methods({
         if (Players.find({gameId:gameId}).count() === Games.findOne(options.maxPlayers))
             throw new Meteor.Error(400, "Game is full");
 
-        //joining a game makes the user a player
-        Meteor.call("createPlayer", options);
+        console.log('clicking the join button');
 
+        var playerCreated = {};
+
+        //joining a game makes the user a player
+        Meteor.call("createPlayer", options,function(err, data) {
+            if (err)
+                console.log(err);
+            console.log('waiting for player creation');
+            playerCreated = data;
+            console.log(playerCreated);
+            //Session.set('q', data);
+        });
+        return playerCreated;
+        //return true;
     }
 });
 
