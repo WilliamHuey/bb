@@ -59,8 +59,9 @@ function getRandomInt(min, max) {
 
 Meteor.methods({
     createPhrase:function (options) {
-        console.log('in create phrase');
-        options = options || {};
+
+        var options = options || {};
+
         if (!(typeof options.text === "string" && options.text.length &&
             typeof options.category === "string" && options.category.length))
             throw new Meteor.Error(400, "Required parameter missing");
@@ -72,18 +73,17 @@ Meteor.methods({
         });
     },
     createPlayer:function (options) {
-        options = options || {};
+
+        var options = options || {};
+        var game = Games.findOne(options.gameId);
+        // generate a color for the player
+        var randColor = ("#" + Math.random().toString(16).slice(2, 8));
 
         if (!(typeof options.gameId === "string" && options.gameId.length > 0))
             throw new Meteor.Error(400, "Required parameter missing");
 
-        var game = Games.findOne(options.gameId);
-
         if (!game)
             throw new Meteor.Error(404, "No such game");
-
-        // generate a color for the player
-        var randColor = ("#" + Math.random().toString(16).slice(2, 8));
 
         Players.insert({
             userId:Meteor.userId(),
@@ -95,12 +95,14 @@ Meteor.methods({
         return Players.find();
     },
     createGuess:function (options) {
-        options = options || {};
+
+        var options = options || {};
+        var player = Players.findOne(options.playerId);
+        var game = Games.findOne(options.gameId);
+
         if (!(options.text === "string" && options.text.length &&
             options.playerId === "string" && options.playerId.length))
             throw new Meteor.Error(400, "Required parameter missing");
-        var player = Players.findOne(options.playerId);
-        var game = Games.findOne(options.gameId);
         if (!player)
             throw new Meteor.Error(404, "No such player");
         if (!game)
@@ -117,6 +119,10 @@ Meteor.methods({
         });
     },
     createGame:function (options) {
+        Phrases.remove({});
+        Phrases.insert({text:"A phrase to remember", category:"A Category"});
+        var phrase = Phrases.findOne({text:"A phrase to remember", category:"A Category"});
+        var today = new Date();
 
         //owner of game can't make another game
         if (Games.find({ownerId:Meteor.userId()}).count() > 0)
@@ -125,11 +131,6 @@ Meteor.methods({
         //player in a game can't create a new game
         if (Players.find({userId:Meteor.userId()}).count() > 0)
             throw new Meteor.Error(400, "Already playing a game")
-
-        Phrases.remove({});
-        Phrases.insert({text:"A phrase to remember", category:"A Category"});
-        var phrase = Phrases.findOne({text:"A phrase to remember", category:"A Category"});
-        var today = new Date();
 
         Games.insert({
             ownerId:Meteor.userId(),

@@ -51,20 +51,23 @@ if (Meteor.isClient) {
     Template.listOfGames.events({
         'click .joinGameButton': function(event){
             var joiningGameId = Games.find({_id: event.target.id}).fetch()[0]._id;
-            //console.log(joiningGameId);
             Meteor.call("joinGame",{gameId: joiningGameId});
             return false;
         }
     });
     Template.gamePlayers.Players = function() {
-        //console.log('the players');
-        //console.log(Players.find().fetch());
         return Players.find();
     };
-    Template.main.isPlayer = function() {
-        console.log(Players.find({userId: Meteor.id()}).fetch());
-        if(Players.find({userId: Meteor.id()}).count() === 1)
-            return Meteor.id();
+
+    Template.main.playersLoaded = function() {
+        if(Players.find().count() > 0){
+            return Meteor.userId();
+        }
+    };
+
+    Template.game.created = function(){
+        console.log('game created');
+        return Session.set("showLobby", false);
     }
 
 

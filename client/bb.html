@@ -9,22 +9,20 @@
 </body>
 
 <template name="main">
+    {{#if showFrontPage}}
+        {{>frontPage}}
+    {{/if}}
     {{#if gamesLoaded}}
-        {{#if showFrontPage}}
-            {{>frontPage}}
-        {{/if}}
          {{#if showLobby}}
             {{>lobby}}
         {{/if}}
     {{/if}}
     {{#if showGame}}
-        {{>game}}
-    {{/if}}
-    {{#if playersLoaded}}
-        {{#if isPlayer}}
-            <p>for player</p>
+        {{#if playersLoaded}}
+            {{>game}}
         {{/if}}
     {{/if}}
+
 </template>
 
 <template name="frontPage">
@@ -33,6 +31,7 @@
 </template>
 
 <template name="lobby">
+
     <h1>Lobby</h1>
     <br>
     <p>user id is</p>{{userId}}
@@ -40,6 +39,7 @@
     {{loginButtons}}
     {{> createButton}}
     {{> listOfGames}}
+
 </template>
 
 <template name="listOfGames">
@@ -73,6 +73,12 @@
         {{> gamePlayers}}
         {{> userInput}}
 
+</template>
+
+<template name="showPlayer">
+    {{#if isPlayer}}
+    <p>for player</p>
+    {{/if}}
 </template>
 
 <template name="gamePlayers">
