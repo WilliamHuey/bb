@@ -11,7 +11,6 @@ if (Meteor.isClient) {
         Meteor.flush();
     }
 
-
     Meteor.subscribe('players', function () {
         return Session.set("playersLoaded", true)
     });
