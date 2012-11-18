@@ -4,6 +4,14 @@ Games = new Meteor.Collection("games");
 Guesses = new Meteor.Collection("guesses");
 
 if (Meteor.isClient) {
+
+    Template.frontPage.rendered = function(){
+        var loginButtonsSession = Accounts._loginButtonsSession;
+        loginButtonsSession.set('dropdownVisible', true);
+        Meteor.flush();
+    }
+
+
     Meteor.subscribe('players', function () {
         return Session.set("playersLoaded", true)
     });
@@ -121,7 +129,7 @@ if (Meteor.isClient) {
     Template.game.Games = function () {
         return Games.find({ownerId:Meteor.userId()});
     };
-    
+
     //display the players in a game
     Template.gamePlayers.Players = function () {
         return Players.find();

@@ -25,20 +25,16 @@
 </template>
 
 <template name="frontPage">
-    <p>Please login or create an account to play.</p>
+    <p id="frontPageNotice">Please login or create an account to play.</p>
     {{loginButtons}}
 </template>
 
 <template name="lobby">
-
     <h1>Lobby</h1>
-    <br>
     <p>user id is</p>{{userId}}
-    <br>
     {{loginButtons}}
     {{> createButton}}
     {{> listOfGames}}
-
 </template>
 
 <template name="listOfGames">
@@ -61,17 +57,13 @@
 </template>
 
 <template name="game">
-
-        <p>Game Room</p>
-        {{#each Games}}
-            <p>GameID {{_id}}</p>
-            <br>
-        {{/each}}
-        <p>Person(s) in the game:</p>
-        <br>
-        {{> gamePlayers}}
-        {{> userInput}}
-
+    <p>Game Room</p>
+    {{#each Games}}
+        <p>GameID {{_id}}</p>
+    {{/each}}
+    <p>Person(s) in the game:</p>
+    {{> gamePlayers}}
+    {{> userInput}}
 </template>
 
 <template name="showPlayer">
@@ -83,22 +75,7 @@
 <template name="gamePlayers">
     {{#each Players}}
         {{userId}}
-        <br>
     {{/each}}
-</template>
-
-<template name="gamePlay">
-    {{#if currentUser}}
-        <div id="leftOuter">
-            {{> userInput}}
-            {{> resultOfInput}}
-            {{> phrases}}
-            {{> phraseInformationHeader}}
-        </div>
-        <div id="rightOuter">
-
-        </div>
-    {{/if}}
 </template>
 
 <template name="userInput">
@@ -106,34 +83,6 @@
         <p>Hey, enter some text here.</p>
         <input type="text" id="inputofuser" name="inputofuser">
         <p class="errorMessageHidden">Please enter only letters.<p>
-</template>
-
-<template name="phrases">
-    {{#each Phrases}}
-        {{> phrase}}
-    {{/each}}
-</template>
-
-<template name="phrase">
-    <p class="phrase">{{phrase}}</p>
-    <p class="category">{{category}}</p>
-</template>
-
-<template name="phraseInformationHeader">
-   {{#each phraseInfo}}
-       {{>phraseInformation}}
-    {{/each}}
-</template>
-
-<template name="phraseInformation">
-    <div class="wordWrapper">
-			<h1 class="wordToGuess {{location}} {{type}}">#</h1>
-			<div class="underlineForWord {{type}}"></div>
-		</div>
-</template>
-
-<template name="resultOfInput">
-    <p>Your result of input</p>
 </template>
 
 <template name="gameOver">

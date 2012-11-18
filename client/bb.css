@@ -5,24 +5,35 @@
 body, html{
 	width: 100%;
 	height: 100%;
+    font: 100%;
 }
 #master{
 	width: 62.5em;
-	background-color: orange;
+	background-color: #F5F5DC;
     margin: auto;
 }
-#leftOuter{
-	width: 50%;
-	background-color: yellow;
-	float: left;
-}
 #rightOuter{
-	width: 50%;
 	background-color: #DCDCDC;
 	float: left;
+    margin: auto;
+
 }
 #login-box{
     float: right;
+}
+
+#login-sign-in-link, .login-close-text{
+    display: none;
+}
+#login-dropdown-list{
+    margin: auto;
+    width: 50%;
+    background-color: #ffffe0;
+}
+#frontPageNotice{
+    font-size: 1.3em;
+    margin: auto;
+    width: 50%;
 }
 #createGameButton{
     float:right;
