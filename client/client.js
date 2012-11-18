@@ -26,6 +26,8 @@ if (Meteor.isClient) {
         return Session.get("playersLoaded");
     }
 
+    Session.set("showLobby", false);
+
 
     //user does not have an id and will be shown the front page
     Template.main.showFrontPage = function () {
@@ -33,15 +35,29 @@ if (Meteor.isClient) {
     };
     //user is now a player because the user has an id
     Template.main.showLobby = function () {
+
+        var player = Players.find({userId:Meteor.userId()});
         var game = Games.find({ownerId:Meteor.userId()});
-        //check to make sure player is not in a game and status is undefined
+        //check to see if player is not a owner of a game and status is undefined
         //once a game of a player is undefined, the player can not be in any game state
 
-        if (Meteor.userId() && game.count() === 0 && typeof game.fetch()[0] === "undefined")
-        //return Meteor.userId();
+        if (Meteor.userId() && game.count() === 0 && player.count() === 0 && typeof game.fetch()[0] === "undefined"){
+            console.log('in the lobby');
             return Meteor.userId();
-        if (Players.find({userId:Meteor.userId()}).count() > 0)
-            console.log('joining was successful');
+        }
+
+        if (Meteor.userId() && player.count() === 0){
+            console.log('user is in lobby');
+            return Meteor.userId();
+        }
+
+
+
+        console.log('in lobby');
+        console.log(Session.get("showLobby"));
+
+        if (Session.get('showLobby'))
+            console.log(Session.get('showLobby'));
     };
     Template.lobby.userId = function () {
         return Meteor.userId();
@@ -56,6 +72,27 @@ if (Meteor.isClient) {
             Meteor.call("joinGame", {gameId:joiningGameId},function(err, data) {
                 if (err)
                     console.log(err);
+
+                if(data){
+                    console.log('setting things');
+                    Session.set("showGame", true);
+                    Session.set("showLobby", false);
+
+
+                    console.log('show game is');
+                    console.log(Session.get("showGame"));
+
+                    console.log('show lobby is');
+                    console.log(Session.get("showLobby"));
+
+                    console.log('playersloaded');
+                    console.log(Session.get("playersLoaded"));
+
+                    console.log('gamesloaded');
+                    Session.set("gamesLoaded", true);
+                    console.log(Session.get("gamesLoaded"));
+                }
+
                 console.log(data);
                 //Session.set('q', data);
             });
@@ -71,11 +108,6 @@ if (Meteor.isClient) {
             return Meteor.userId();
         }
     };
-
-    Template.game.created = function () {
-        console.log('game created');
-        return Session.set("showLobby", false);
-    }
 
 
     //events for the create new game dialog
@@ -106,9 +138,24 @@ if (Meteor.isClient) {
     //game is valid because there is a user id associated to a game
     //game must be in defined state of waiting, playing or finished
     Template.main.showGame = function () {
+
+        var player = Players.find({userId:Meteor.userId()});
+        //console.log('in game ' + Session.get("playersLoaded"));
+        //console.log();
+
+
+
         var game = Games.find({ownerId:Meteor.userId()});
-        if (Meteor.userId() && game.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing"))
+        if (Meteor.userId() && game.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing")){
+            console.log('really in a game');
             return Meteor.userId();
+        }
+        if (Meteor.userId() && player.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing")){
+            console.log('really in a game2');
+            return Meteor.userId();
+        }
+
+
     }
     //the game-play template
     Template.game.Games = function () {
