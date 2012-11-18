@@ -98,6 +98,7 @@ Meteor.methods({
             score: 0,
             color: randColor
         });
+        console.log('person in the game is');
         console.log(Players.find().fetch());
         return Players.find();
     },
@@ -124,31 +125,53 @@ Meteor.methods({
         });
     },
     createGame: function(options) {
-        if(Games.find({ownerId: this.userId}).count() > 0){
-            throw new Meteor.Error(400, "Already a game");
-        } else {
-            Phrases.remove({});
-            Phrases.insert({text: "A phrase to remember", category: "A Category"});
-            var phrase = Phrases.findOne({text: "A phrase to remember", category: "A Category"});
-            var today = new Date();
 
-            return Games.insert({
-                ownerId: this.userId,
-                name: options.name || "Game " + today.toString(),
-                maxPlayers: 2,
-                phrase: phrase.text,
-                category: phrase.category,
-                jackpot: 0,
-                guessPhrase: new Array(phrase),
-                status: 'waiting',
-                createdAt: today,
-                startedAt: null,
-                endedAt: null,
-                players: []
-            });
-        }
+        //owner of game can't make another game
+        if(Games.find({ownerId: Meteor.userId()}).count() > 0)
+            throw new Meteor.Error(400, "You already created a game");
+
+        //player in a game can't create a new game
+        if(Players.find({userId: Meteor.userId()}).count() > 0)
+            throw new Meteor.Error(400, "Already playing a game")
+
+        /*
+         STILL NEED TO MAKE OWNER OF GAME AS PLAYER TOO
+         */
+
+        Phrases.remove({});
+        Phrases.insert({text: "A phrase to remember", category: "A Category"});
+        var phrase = Phrases.findOne({text: "A phrase to remember", category: "A Category"});
+        var today = new Date();
+
+        Games.insert({
+            ownerId: Meteor.userId(),
+            name: options.name || "Game " + today.toString(),
+            maxPlayers: 2,
+            phrase: phrase.text,
+            category: phrase.category,
+            jackpot: 0,
+            guessPhrase: new Array(phrase),
+            status: 'waiting',
+            createdAt: today,
+            startedAt: null,
+            endedAt: null,
+            players: []
+        });
+
+
+        var gameStuff = {};
+        gameStuff.gameId = Games.find({ownerId: Meteor.userId()}).fetch()[0]._id;
+
+        console.log('game creation');
+        //console.log(options);
+        Meteor.call("createPlayer", gameStuff);
+        console.log(gameStuff);
+
+        //return Games.find();
+
     },
     joinGame: function(options){
+
         //joining game cases
         //var player = Players.findOne(options.playerId);
         var gameId = Games.findOne(options.gameId);
