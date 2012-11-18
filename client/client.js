@@ -146,11 +146,17 @@ if (Meteor.isClient) {
 
 
         var game = Games.find({ownerId:Meteor.userId()});
+
+
         if (Meteor.userId() && game.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing")){
             console.log('really in a game');
             return Meteor.userId();
         }
-        if (Meteor.userId() && player.count() === 1 && (game.fetch()[0].status === "waiting" || game.fetch()[0].status === "playing")){
+
+        console.log('in show game');
+        console.log(player.count());
+
+        if (Meteor.userId() && player.count() === 1){
             console.log('really in a game2');
             return Meteor.userId();
         }
