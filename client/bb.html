@@ -20,6 +20,11 @@
     {{#if showGame}}
         {{>game}}
     {{/if}}
+    {{#if playersLoaded}}
+        {{#if isPlayer}}
+            <p>for player</p>
+        {{/if}}
+    {{/if}}
 </template>
 
 <template name="frontPage">
@@ -57,24 +62,24 @@
 </template>
 
 <template name="game">
-    <p>Game Room</p>
-    {{#each Games}}
-    <p>GameID {{_id}}</p>
-    <br>
-    <p>Person(s) in the game:</p>
-        {{ownerId}} <br>
-    {{/each}}
-    <br>
-    {{> gamePlayers}}
-    {{> userInput}}
+
+        <p>Game Room</p>
+        {{#each Games}}
+            <p>GameID {{_id}}</p>
+            <br>
+        {{/each}}
+        <p>Person(s) in the game:</p>
+        <br>
+        {{> gamePlayers}}
+        {{> userInput}}
+
 </template>
 
-
-
 <template name="gamePlayers">
-        {{#each Players}}
-            {{userId}}
-        {{/each}}
+    {{#each Players}}
+        {{userId}}
+        <br>
+    {{/each}}
 </template>
 
 <template name="gamePlay">

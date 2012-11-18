@@ -6,11 +6,11 @@ Guesses = new Meteor.Collection("guesses");
 if (Meteor.isClient) {
 
     Meteor.subscribe('players', function () {
-
+        return Session.set("playersLoaded", true)
     });
 
     Meteor.subscribe('games', function onComplete() {
-        return Session.set("gamesLoaded", true)
+        return Session.set("gamesLoaded", true);
     });
 
     Meteor.subscribe('phrases', function () {
@@ -21,6 +21,9 @@ if (Meteor.isClient) {
 
     Template.main.gamesLoaded = function(){
         return Session.get("gamesLoaded");
+    }
+    Template.main.playerLoaded = function(){
+        return Session.get("playersLoaded");
     }
 
 
@@ -48,18 +51,21 @@ if (Meteor.isClient) {
     Template.listOfGames.events({
         'click .joinGameButton': function(event){
             var joiningGameId = Games.find({_id: event.target.id}).fetch()[0]._id;
-            console.log(joiningGameId);
+            //console.log(joiningGameId);
             Meteor.call("joinGame",{gameId: joiningGameId});
             return false;
         }
     });
     Template.gamePlayers.Players = function() {
-        console.log('the players');
-        console.log(Players.find().fetch());
+        //console.log('the players');
+        //console.log(Players.find().fetch());
         return Players.find();
     };
-
-
+    Template.main.isPlayer = function() {
+        console.log(Players.find({userId: Meteor.id()}).fetch());
+        if(Players.find({userId: Meteor.id()}).count() === 1)
+            return Meteor.id();
+    }
 
 
         //events for the create new game dialog
