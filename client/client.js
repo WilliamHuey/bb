@@ -7,30 +7,18 @@ if (Meteor.isClient) {
         Meteor.flush();
     }
     Meteor.startup(function(){
-        console.log('startup');
-        Template.main.rendered = function(){
-            //console.log('created main');
-
-            console.log("login is now " + Session.get("loginLoaded"));
-            if(Session.get("loginLoaded") !== true)
-                $('#frontPageNotice').text("Please wait. Loading ...");
-        }
+        //display a loading message to tell user to wait
+        $('#frontPageNotice').html("Please wait. Loading ...");
     });
-
 
     //wait for accounts login button to load before loading the sign in portion
     Template.frontPage.rendered = function(){
-        //console.log('frontpage loaded');
-
-        Session.set("loginLoaded", true);
-
-
+        //opens up the login box
         showLoginBox();
         $(".login-button-form-submit").attr('unselectable', 'on');
-        $('#frontPageNotice').text("Please login or create an account to play.");
+        //$('#frontPageNotice').html("Please login or create an account to play.");
+        Session.set("loginLoaded", true);
     };
-
-
 
     Meteor.subscribe('players', function () {
         return Session.set("playersLoaded", true);
