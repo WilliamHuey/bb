@@ -5,14 +5,23 @@ Guesses = new Meteor.Collection("guesses");
 
 if (Meteor.isClient) {
 
-    Template.frontPage.rendered = function(){
+    function showLoginBox(){
         var loginButtonsSession = Accounts._loginButtonsSession;
         loginButtonsSession.set('dropdownVisible', true);
         Meteor.flush();
     }
 
+
+    //wait for accounts login button to load before loading the sign in portion
+    Template.frontPage.rendered = function(){
+        showLoginBox();
+        $(".login-button-form-submit").attr('unselectable', 'on');
+    };
+
+
+
     Meteor.subscribe('players', function () {
-        return Session.set("playersLoaded", true)
+        return Session.set("playersLoaded", true);
     });
 
     Meteor.subscribe('games', function onComplete() {
@@ -28,15 +37,18 @@ if (Meteor.isClient) {
     //indicate that the games collection has loaded for the first time
     Template.main.gamesLoaded = function () {
         return Session.get("gamesLoaded");
-    }
+    };
 
     //indicate that the players collection has loaded for the first time
     Template.main.playerLoaded = function () {
         return Session.get("playersLoaded");
-    }
+    };
 
     //user does not have an id and will be shown the front page
     Template.main.showFrontPage = function () {
+        if(!Meteor.userId()){
+            showLoginBox();
+        }
         return !Meteor.userId();
     };
 
@@ -54,14 +66,14 @@ if (Meteor.isClient) {
 
     Template.lobby.userId = function () {
         return Meteor.userId();
-    }
+    };
 
     //the list of games in the lobby
     Template.listOfGames.Game = function () {
         return Games.find();
     };
 
-    //after clicking on button the showGame is set to true
+    //after clicking on the join button, the showGame is set to true
     Template.listOfGames.events({
         'click .joinGameButton':function (event) {
             var joiningGameId = Games.find({_id:event.target.id}).fetch()[0]._id;
