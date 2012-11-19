@@ -1,7 +1,3 @@
-Players = new Meteor.Collection("players");
-Phrases = new Meteor.Collection("phrases");
-Games = new Meteor.Collection("games");
-Guesses = new Meteor.Collection("guesses");
 
 if (Meteor.isClient) {
 
@@ -10,12 +6,28 @@ if (Meteor.isClient) {
         loginButtonsSession.set('dropdownVisible', true);
         Meteor.flush();
     }
+    Meteor.startup(function(){
+        console.log('startup');
+        Template.main.rendered = function(){
+            //console.log('created main');
+
+            console.log("login is now " + Session.get("loginLoaded"));
+            if(Session.get("loginLoaded") !== true)
+                $('#frontPageNotice').text("Please wait. Loading ...");
+        }
+    });
 
 
     //wait for accounts login button to load before loading the sign in portion
     Template.frontPage.rendered = function(){
+        //console.log('frontpage loaded');
+
+        Session.set("loginLoaded", true);
+
+
         showLoginBox();
         $(".login-button-form-submit").attr('unselectable', 'on');
+        $('#frontPageNotice').text("Please login or create an account to play.");
     };
 
 
