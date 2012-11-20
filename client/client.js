@@ -16,6 +16,7 @@ if (Meteor.isClient) {
         //opens up the login box
         showLoginBox();
         $(".login-button-form-submit").attr('unselectable', 'on');
+        $('#login-email').focus();
         //$('#frontPageNotice').html("Please login or create an account to play.");
         Session.set("loginLoaded", true);
     };

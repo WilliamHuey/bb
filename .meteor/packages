@@ -5,7 +5,6 @@
 
 insecure
 preserve-inputs
-backbone
 jquery
 accounts-ui-unstyled
 accounts-password

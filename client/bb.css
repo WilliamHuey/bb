@@ -114,7 +114,7 @@ input:focus {
     margin-left: 28%;
 }
 */
-#login-email-label-and-input > input, #login-password-label-and-input > input {
+#login-email, #login-password, #forgot-password-email{
     margin-left: 1em;
     width: 60%;
 }
@@ -188,7 +188,7 @@ input:focus {
     width: 50%;
 }
 
-#signup-link{
+#signup-link, #back-to-login-link{
     margin-left: 55%;
     float: left;
 }
