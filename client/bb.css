@@ -48,11 +48,12 @@ body, html{
 	width: 100%;
 	height: 100%;
     font: 100%;
+    margin: auto;
 }
 #master{
-	width: 62.5em;
+    width: 100%;
 	background-color: #F5F5DC;
-    margin: auto;
+    float: left;
 }
 input {
     height: 1.8em;
@@ -82,36 +83,37 @@ input:focus {
     margin: auto;
     width: 50%;
     background-color: #ffffe0;
+    float: left;
+    margin-left: 25%;
 }
 #frontPageNotice{
     font-size: 1.3em;
     margin: auto;
-    padding: 0.9em 0em 1.4em;
+    padding: 1.5% 0 2%;
     width: 50%;
     text-align: center;
 }
 .login-form.login-password-form{
     width: 100%;
 }
-#login-email-label-and-input, #login-password-label-and-input {
+#login-email-label-and-input, #login-password-label-and-input ,#forgot-password-email-label-and-input{
     padding-bottom: 0.9em;
     width: 100%;
-}
-#login-email-label, #login-password-label {
     float: left;
-    padding-top: 0.3em;
+}
+#login-email-label, #login-password-label, #forgot-password-email-label {
+    float: left;
+    padding-top: 1%;
     width: 23%;
     text-align: right;
 }
+/*
 .error-message {
+    background-color: red;
     float: left;
-    padding-left: 8.9em;
-    padding-top: 0.4em;
-    width: 30%;
+    margin-left: 28%;
 }
-.additional-link-container{
-    clear: right;
-}
+*/
 #login-email-label-and-input > input, #login-password-label-and-input > input {
     margin-left: 1em;
     width: 60%;
@@ -119,8 +121,8 @@ input:focus {
 .login-button.login-button-form-submit {
     width: 13%;
     text-align: center;
-    float: right;
-    margin-right: 4.5em;
+    float: left;
+    margin-left: 60%;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -179,6 +181,22 @@ input:focus {
     color: rgba(122,122,122,1);
     text-shadow: 0px -1px 0px rgba(237,237,237,1)
 }
+.additional-link-container {
+    float: left;
+    font-size: 85%;
+    margin-top: 3.5%;
+    width: 50%;
+}
+
+#signup-link{
+    margin-left: 55%;
+    float: left;
+}
+#forgot-password-link{
+    margin-left: 23%;
+    float: left;
+}
+
 #createGameButton{
     float:right;
 }
